@@ -1,0 +1,19 @@
+
+input {
+    border: none;
+    background: #EFF0F6;
+    height: 44px;
+    width: 266px;
+    padding: 0px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: #D6D7E3;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+}

@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --color-success: #4BDE97;
+    --color-primary: #2F49D1;
+    --global-font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.layout-container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    background: #F0F2FA;
+    
+    color: #690505
+}
+
+
+.side-bar {
+    background: #161624;
+    height: 100%;
+    min-width: 253px;
+    color: white;
+}
+
+
+
+.header-logo {
+    margin: 0px 20px;
+    padding: 25px 7px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.header-logo h1 {
+    font-size: 20.63px;
+    font-weight: bold;
+}
+
+.header-logo h2 {
+    font-size: 12.03px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.menu {
+    margin: 0px 20px;
+    padding: 25px 0px;
+    font-size: 14px;
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+.menu-option {
+    height: 51px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.menu-option:hover .option-text {
+    color: rgba(255, 255, 255, 1);
+}
+
+
+.menu-option .option-text {
+    color: rgba(255, 255, 255, .8);
+    text-decoration: none;
+    margin-left: 14px;
+}
+
+
+main {
+    height: 100%;
+    flex: 1;
+    padding: 30px 20px;
+}
+
+main h2 {
+    font-size: 24px;
+    color: #171717;
+}
+
+
+
+.main-view {
+    margin-top: 25px;
+    background: white;
+    border-radius: 10px;
+    padding-bottom: 15px;
+}
+
+.view-header {
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid 1px #DADBE4;
+}
+
+
+.input-group {
+    padding: 0px 20px;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    text-align: left;
+    background: #EFF0F6;
+    color: #767676;
+    font-size: 14px;
+    height: 48px;
+    box-shadow: 0px 1px 0px #DADBE4;
+}
+
+tbody tr {
+    box-shadow: 0px 1px 0px #EEEEEE;
+    height: 48px;
+}
+
+th, td {
+    padding: 5px 30px;
+    min-height: 48px;
+    font-weight: 500;
+}
+
+td {
+    font-size: 12px;
+    font-weight: 500;
+    color: #767676;
+}

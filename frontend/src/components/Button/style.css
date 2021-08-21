@@ -1,0 +1,21 @@
+.button {
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:disabled {
+    opacity: .2;
+    cursor: inherit;
+}
+
+
+.success {
+    background: var(--color-success);    
+}
+
+.primary {
+    background: var(--color-primary);
+}

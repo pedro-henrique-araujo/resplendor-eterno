@@ -1,0 +1,15 @@
+CREATE TABLE produto (
+    id SERIAL PRIMARY KEY,
+    descr VARCHAR(255),
+    forn_doc VARCHAR(14),
+    prec_en DECIMAL(18, 2),
+    prec_sa DECIMAL(18, 2),
+    esto INTEGER
+);
+
+INSERT INTO produto 
+(descr, forn_doc, prec_en, prec_sa, esto)
+VALUES
+('CAIXÃO MARROM DE MADEIRA', '01234567891256', 500.00, 700.00, 23),
+('CAIXÃO BRANCO DE MADEIRA', '01234567891256', 600.00, 900.00, 5),
+('CAIXÃO PRETO DE MADEIRA', '01234567891256', 300.00, 500.00, 12);
