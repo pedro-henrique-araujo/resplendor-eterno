@@ -3,6 +3,7 @@
 :root {
     --color-success: #4BDE97;
     --color-primary: #2F49D1;
+    --color-muted: #B9B9B9;
     --global-font-family: 'Inter', sans-serif;
 }
 
@@ -106,6 +107,9 @@ main h2 {
     border-bottom: solid 1px #DADBE4;
 }
 
+.view-body {
+    padding: 15px;
+}
 
 .input-group {
     padding: 0px 20px;
@@ -142,4 +146,18 @@ td {
     font-size: 12px;
     font-weight: 500;
     color: #767676;
+}
+
+form {
+    margin-top: 30px;
+}
+
+.input-with-label {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-with-label label {
+    font-size: 14px;
+    color: #171717;
 }

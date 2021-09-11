@@ -29,3 +29,20 @@ export function PrimaryButton(props) {
             onClick={props.onClick}/>;
 }
 
+
+export function MutedButton(props) {
+    return <Button 
+            className="muted" 
+            disabled={props.disabled}  
+            icon={props.icon} 
+            onClick={props.onClick}/>;
+}
+
+
+export function DefaultButton(props) {
+    return <Button 
+            className="default" 
+            disabled={props.disabled}  
+            icon={props.icon} 
+            onClick={props.onClick}/>;
+}

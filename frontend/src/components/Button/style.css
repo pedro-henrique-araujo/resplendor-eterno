@@ -12,10 +12,18 @@
 }
 
 
+.default {
+    background: inherit;
+}
+
 .success {
     background: var(--color-success);    
 }
 
 .primary {
     background: var(--color-primary);
+}
+
+.muted {
+    background: var(--color-muted);
 }

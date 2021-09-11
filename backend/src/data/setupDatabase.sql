@@ -1,3 +1,25 @@
+CREATE TABLE pessoa (
+    doc VARCHAR(14) UNIQUE,
+    rel INTEGER
+);
+
+CREATE TABLE carac_juridica (
+    doc VARCHAR(14) UNIQUE,
+    razao VARCHAR(255)
+);
+
+ALTER TABLE carac_juridica ADD FOREIGN KEY (doc) REFERENCES pessoa(doc);
+
+CREATE TABLE carac_fisica (
+    doc VARCHAR(14) UNIQUE, 
+    nome VARCHAR(255),
+    rg VARCHAR(11),
+    sexo INTEGER
+);
+
+ALTER TABLE carac_fisica ADD FOREIGN KEY (doc) REFERENCES pessoa(doc);
+
+
 CREATE TABLE produto (
     id SERIAL PRIMARY KEY,
     descr VARCHAR(255),
@@ -7,9 +29,4 @@ CREATE TABLE produto (
     esto INTEGER
 );
 
-INSERT INTO produto 
-(descr, forn_doc, prec_en, prec_sa, esto)
-VALUES
-('CAIXÃO MARROM DE MADEIRA', '01234567891256', 500.00, 700.00, 23),
-('CAIXÃO BRANCO DE MADEIRA', '01234567891256', 600.00, 900.00, 5),
-('CAIXÃO PRETO DE MADEIRA', '01234567891256', 300.00, 500.00, 12);
+ALTER TABLE produto ADD FOREIGN KEY (forn_doc) REFERENCES pessoa(doc);

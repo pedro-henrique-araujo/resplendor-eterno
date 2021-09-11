@@ -2,22 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { SuccessButton } from '../../../components/Button';
 import api from '../../../services/api';
 
-import editIcon from '../../../assets/edit.svg';
 import plusIcon from '../../../assets/plus.svg';
-import {SearchInput} from '../../../components/Input';
+import SearchInput from '../../../components/Input';
 import PaginationInput from '../../../components/PaginationInput';
 
-export default function ProdutosList() {
-    async function loadProdutosAsync(page) {
+export default function List() {
+    async function loadListAsync(page) {
         let { data } = await api
-            .get(`/produtos?page=${page}&search=${search}`);
-        setProdutos(data.records);
+            .get(`/list?page=${page}&search=${search}`);
+        setList(data.records);
         setNumberOfPages(data.numberOfPages);
     }
 
     
-    function loadProdutos(page) {
-        loadProdutosAsync(page);
+    function loadList(page) {
+        loadListAsync(page);
     }
 
     function searchInputChange(event) {
@@ -26,18 +25,18 @@ export default function ProdutosList() {
         setPage(1);
     }
 
-    let [produtos, setProdutos] = useState([]);
+    let [list, setList] = useState([]);
     let [page, setPage] = useState(1);
     let [numberOfPages, setNumberOfPages] = useState(0);
     let [search, setSearch] = useState('');
 
 
-    useEffect(() => loadProdutos(page), []);
-    useEffect(() => loadProdutos(page), [page, search]);
+    useEffect(() => loadList(page), []);
+    useEffect(() => loadList(page), [page, search]);
 
     return (
         <div>
-            <h2>Produtos</h2>
+            <h2>List</h2>
             <div className="main-view">
                 <div className="view-header">
                     <div className="input-group">
@@ -51,24 +50,12 @@ export default function ProdutosList() {
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Descrição</th>
-                            <th>Preço de Entrada</th>
-                            <th>Preço de Saída</th>
-                            <th>Estoque</th>
-                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {produtos?.map(produto => (
+                    {list?.map(item => (
                         <tr>
-                            <td>{produto.id}</td>
-                            <td>{produto.descr}</td>
-                            <td>R$ {produto.precEn}</td>
-                            <td>R$ {produto.precSa}</td>
-                            <td>{produto.esto}</td>
-                            <td>
-                                <img src={editIcon} />
-                            </td>
+                            <td>{item.id}</td>
                         </tr>
                     ))}
                     </tbody>

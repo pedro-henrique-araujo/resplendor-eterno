@@ -15,8 +15,8 @@ export default function PaginationInput(props) {
         props.setPage(props.page - 1);
     }
 
-    let previousButtonDisabled = props.page == 1;
-    let nextButtonDisabled = props.page == props.numberOfPages;    
+    let previousButtonDisabled = props.page <= 1;
+    let nextButtonDisabled = props.page >= props.numberOfPages;    
 
     return (
         <div className="pagination-group">

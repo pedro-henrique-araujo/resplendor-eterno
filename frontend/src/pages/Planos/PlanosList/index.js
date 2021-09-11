@@ -2,7 +2,7 @@ import React from 'react';
 import editIcon from '../../../assets/edit.svg';
 import plusIcon from '../../../assets/plus.svg';
 import { SuccessButton } from '../../../components/Button';
-import SearchInput from '../../../components/Input';
+import {SearchInput} from '../../../components/Input';
 import PaginationInput from '../../../components/PaginationInput';
 
 export default function PlanosList() {
