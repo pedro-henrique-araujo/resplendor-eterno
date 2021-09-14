@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import './style.css';
 
 export function SearchInput(props) {
@@ -20,6 +20,20 @@ export function TextWithLabel(props) {
                 value={props.value}                
                 onChange={props.onChange}
                 />
+            <p className="validation-message">
+                {props.validationMessage}
+            </p>
+        </div>
+    );
+}
+
+export function SelectWithLabel(props) {
+    return (
+        <div className="select-with-label">
+            <label>{props.label}</label>
+            <select onChange={props.onChange} disabled={props.disabled}>
+                {props.children}
+            </select>
             <p className="validation-message">
                 {props.validationMessage}
             </p>

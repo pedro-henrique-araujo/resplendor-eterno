@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Page1 from './pages/Page1';
 import Page2 from './pages/Page2';
 import ProdutosList from './pages/Produtos/ProdutosList';
+import ProdutosNew from './pages/Produtos/ProdutosNew';
 import PlanosList from './pages/Planos/PlanosList';
 import Layout from './Layout';
 import FornecedoresList from './pages/Fornecedores/FornecedoresList';
@@ -17,7 +18,8 @@ export default function Routes() {
                 <Layout>
                     <Route path="/" exact component={Page1}/>
                     <Route path="/page2" exact component={Page2}/>
-                    <Route path="/produtos" component={ProdutosList}/>
+                    <Route exact path="/produtos" component={ProdutosList}/>
+                    <Route path="/produtos/novo" component={ProdutosNew}/>
                     <Route path="/planos" component={PlanosList}/>
                     <Route exact path="/fornecedores" component={FornecedoresList} />
                     <Route path="/fornecedores/novo" component={FornecedoresNew} />

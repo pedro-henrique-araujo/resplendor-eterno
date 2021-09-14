@@ -14,6 +14,11 @@ async function listFornecedores(request, response) {
     response.json(output);
 }
 
+async function getFornecedoresOptions(request, response) {
+    let records = await fornecedorRepository.getOptions();
+    response.json(records);
+}
+
 async function detailFornecedor(request, response) {
     let { doc } = request.params;
     let record = await fornecedorRepository.getSingle(doc);
@@ -54,6 +59,7 @@ async function deleteFornecedor(request, response) {
 
 function fornecedorController(routes) {
     routes.get('/fornecedores', listFornecedores);
+    routes.get('/fornecedores/options', getFornecedoresOptions);
     routes.get('/fornecedores/:doc', detailFornecedor);
     routes.post('/fornecedores', createFornecedor);
     routes.put('/fornecedores/:doc', updateFornecedor);

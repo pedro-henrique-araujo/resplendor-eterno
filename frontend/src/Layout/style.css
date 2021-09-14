@@ -152,12 +152,12 @@ form {
     margin-top: 30px;
 }
 
-.input-with-label {
+.input-with-label, .select-with-label {
     display: flex;
     flex-direction: column;
 }
 
-.input-with-label label {
+:is(.input-with-label, .select-with-label) label {
     font-size: 14px;
     color: #171717;
 }

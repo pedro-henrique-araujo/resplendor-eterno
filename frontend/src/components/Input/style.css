@@ -1,8 +1,9 @@
-.input-with-label {
+.input-with-label, .select-with-label {
     margin: 10px 0 30px;
 }
 
-input {
+.input-with-label input, .select-with-label select {
+    box-sizing: border-box;
     border: none;
     background: #EFF0F6;
     height: 44px;

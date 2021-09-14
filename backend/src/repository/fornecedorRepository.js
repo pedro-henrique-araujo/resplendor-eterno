@@ -64,6 +64,14 @@ module.exports = {
     },
 
 
+    async getOptions() {
+        let data = await db.query(`
+            SELECT pessoa.doc, carac_juridica.razao FROM pessoa
+            JOIN carac_juridica ON (pessoa.doc = carac_juridica.doc)
+        `);
+        return data;
+    },
+
     async getSingle(doc) {
         let data = await db.query(`
             SELECT pessoa.doc, carac_juridica.razao FROM pessoa

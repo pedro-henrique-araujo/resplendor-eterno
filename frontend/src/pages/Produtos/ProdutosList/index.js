@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SuccessButton } from '../../../components/Button';
 import api from '../../../services/api';
-
+import { useHistory } from 'react-router';
 import editIcon from '../../../assets/edit.svg';
 import plusIcon from '../../../assets/plus.svg';
 import {SearchInput} from '../../../components/Input';
@@ -26,6 +26,10 @@ export default function ProdutosList() {
         setPage(1);
     }
 
+    function goToNew() {
+        history.push('/produtos/novo');
+    }
+
     let [produtos, setProdutos] = useState([]);
     let [page, setPage] = useState(1);
     let [numberOfPages, setNumberOfPages] = useState(0);
@@ -34,6 +38,8 @@ export default function ProdutosList() {
 
     useEffect(() => loadProdutos(page), []);
     useEffect(() => loadProdutos(page), [page, search]);
+
+    let history = useHistory();
 
     return (
         <div>
@@ -44,7 +50,7 @@ export default function ProdutosList() {
                         <SearchInput value={search} onChange={searchInputChange}/>
                     </div>
                     <div className="input-group">
-                        <SuccessButton icon={plusIcon} />
+                        <SuccessButton icon={plusIcon} onClick={goToNew}/>
                     </div>
                 </div>
                 <table>
