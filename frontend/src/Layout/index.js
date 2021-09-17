@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 
 import boxIcon from '../assets/box.svg';
 import packageIcon from '../assets/package.svg';
+import fileIcon from '../assets/file.svg';
 import truckIcon from '../assets/truck.svg';
+import userIcon from '../assets/user.svg';
+import outIcon from '../assets/out.svg';
+import inIcon from '../assets/in.svg';
 
 function HeaderLogo() {
     return (
@@ -34,7 +38,11 @@ export default function Layout(props) {
                 <div className="menu">
                     <MenuOption to="/produtos" src={boxIcon} text="Produtos"/>
                     <MenuOption to="/planos" src={packageIcon} text="Planos"/>
+                    <MenuOption to="/contratos" src={fileIcon} text="Contratos"/>
                     <MenuOption to="/fornecedores" src={truckIcon} text="Fornecedores"/>
+                    <MenuOption to="/clientes" src={userIcon} text="Clientes"/>
+                    <MenuOption to="/saidas" src={outIcon} text="Saidas"/>
+                    <MenuOption to="/entradas" src={inIcon} text="Entradas"/>
                 </div>
             </div>
             <main>

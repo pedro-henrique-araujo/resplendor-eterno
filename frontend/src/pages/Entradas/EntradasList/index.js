@@ -6,7 +6,7 @@ import plusIcon from '../../../assets/plus.svg';
 import {SearchInput} from '../../../components/Input';
 import PaginationInput from '../../../components/PaginationInput';
 
-export default function List() {
+export default function EntradasList() {
     async function loadListAsync(page) {
         let { data } = await api
             .get(`/list?page=${page}&search=${search}`);
@@ -36,7 +36,7 @@ export default function List() {
 
     return (
         <div>
-            <h2>List</h2>
+            <h2>Entradas de Produtos</h2>
             <div className="main-view">
                 <div className="view-header">
                     <div className="input-group">
@@ -50,6 +50,9 @@ export default function List() {
                     <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Quantidades de itens</th>
+                            <th>Valor total</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>

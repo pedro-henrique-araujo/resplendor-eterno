@@ -36,7 +36,7 @@ export default function List() {
 
     return (
         <div>
-            <h2>List</h2>
+            <h2>Saida de produtos</h2>
             <div className="main-view">
                 <div className="view-header">
                     <div className="input-group">
@@ -50,6 +50,10 @@ export default function List() {
                     <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Cliente</th>
+                            <th>Quantidades de itens</th>
+                            <th>Valor total</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>

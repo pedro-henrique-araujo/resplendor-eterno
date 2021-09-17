@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { SuccessButton } from '../../../components/Button';
+import { SuccessButton, DefaultButton } from '../../../components/Button';
 import api from '../../../services/api';
 
-import plusIcon from '../../../assets/plus.svg';
-import {SearchInput} from '../../../components/Input';
+import { SearchInput } from '../../../components/Input';
 import PaginationInput from '../../../components/PaginationInput';
 
-export default function List() {
+import plusIcon from '../../../assets/plus.svg';
+import editIcon from '../../../assets/edit.svg';
+
+export default function ClientesList() {
     async function loadListAsync(page) {
         let { data } = await api
             .get(`/list?page=${page}&search=${search}`);
@@ -25,7 +27,12 @@ export default function List() {
         setPage(1);
     }
 
-    let [list, setList] = useState([]);
+    let [list, setList] = useState([{
+         doc: '07374760361',
+         nome: 'Pedro Henrique',
+         contato: '(85) 9 8844-7999',
+         endereco: 'Rua da Sardinha, 22'
+    }]);
     let [page, setPage] = useState(1);
     let [numberOfPages, setNumberOfPages] = useState(0);
     let [search, setSearch] = useState('');
@@ -36,7 +43,7 @@ export default function List() {
 
     return (
         <div>
-            <h2>List</h2>
+            <h2>Clientes</h2>
             <div className="main-view">
                 <div className="view-header">
                     <div className="input-group">
@@ -49,13 +56,23 @@ export default function List() {
                 <table>
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>CPF</th>
+                            <th>Nome</th>
+                            <th>Contato</th>
+                            <th>Endereço</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                     {list?.map(item => (
                         <tr>
-                            <td>{item.id}</td>
+                            <td>{item.doc}</td>
+                            <td>{item.nome}</td>
+                            <td>{item.contato}</td>
+                            <td>{item.endereco}</td>
+                            <td>
+                                <DefaultButton onClick={() => {}} icon={editIcon} />
+                            </td>
                         </tr>
                     ))}
                     </tbody>
