@@ -6,6 +6,7 @@ import Page2 from './pages/Page2';
 import ProdutosList from './pages/Produtos/ProdutosList';
 import ProdutosNew from './pages/Produtos/ProdutosNew';
 import PlanosList from './pages/Planos/PlanosList';
+import PlanosNew from './pages/Planos/PlanosNew';
 import Layout from './Layout';
 import FornecedoresList from './pages/Fornecedores/FornecedoresList';
 import FornecedoresNew from './pages/Fornecedores/FornecedoresNew';
@@ -20,7 +21,8 @@ export default function Routes() {
                     <Route path="/page2" exact component={Page2}/>
                     <Route exact path="/produtos" component={ProdutosList}/>
                     <Route path="/produtos/novo" component={ProdutosNew}/>
-                    <Route path="/planos" component={PlanosList}/>
+                    <Route exact path="/planos" component={PlanosList}/>
+                    <Route path="/planos/novo" component={PlanosNew}/>
                     <Route exact path="/fornecedores" component={FornecedoresList} />
                     <Route path="/fornecedores/novo" component={FornecedoresNew} />
                     <Route path="/fornecedores/editar/:doc" component={FornecedoresEdit} />

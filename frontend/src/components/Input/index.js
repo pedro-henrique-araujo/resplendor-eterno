@@ -1,12 +1,14 @@
 
 import React from 'react';
+import { DefaultButton } from '../Button';
 import './style.css';
 
 export function SearchInput(props) {
     return <input 
         value={props.value}
         onChange={props.onChange}
-        type="search" 
+        type="search"
+        className="search-input"
         placeholder={props.placeholder || 'Pesquisar'} />
 }
 
@@ -28,9 +30,18 @@ export function TextWithLabel(props) {
 }
 
 export function SelectWithLabel(props) {
+
+    let { itemButton } = props;
+
     return (
         <div className="select-with-label">
-            <label>{props.label}</label>
+            <div className="children-inline">
+                <label>{props.label}</label>
+                <DefaultButton 
+                    onClick={itemButton?.onClick} 
+                    icon={itemButton?.src} />
+            </div>
+
             <select onChange={props.onChange} disabled={props.disabled}>
                 {props.children}
             </select>

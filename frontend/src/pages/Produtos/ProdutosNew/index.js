@@ -147,7 +147,7 @@ export default function ProdutosNew() {
 
     return (
         <div>
-            <h2>Formulario</h2>
+            <h2>Novo Produto</h2>
             <div className="main-view">
                 <div className="view-body">
                     <MutedButton icon={arrowLeftIcon} onClick={history.goBack}/>
