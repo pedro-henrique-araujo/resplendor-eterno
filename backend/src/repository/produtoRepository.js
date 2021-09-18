@@ -54,6 +54,13 @@ module.exports = {
         return output;
     },
 
+    async getOptions() {
+        let data = await db.query(`
+            SELECT id, descr FROM produto
+        `);
+        return data;
+    },
+
     async getSingle(id) {
         let data = await db.query(`
             SELECT * FROM produto

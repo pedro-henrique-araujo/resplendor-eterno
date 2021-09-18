@@ -15,6 +15,11 @@ async function listProdutos(request, response) {
     response.json(output);
 }
 
+async function getProdutosOptions(request, response) {
+    let records = await produtoRepository.getOptions();
+    response.json(records);
+} 
+
 async function detailProduto(request, response) {
     let { id } = request.params;
     let record = await produtoRepository.getSingle(id);
@@ -43,6 +48,7 @@ async function updateProduto(request, response) {
 
 function produtoController(routes) {
     routes.get('/produtos', listProdutos);
+    routes.get('/produtos/options', getProdutosOptions);
     routes.get('/produtos/:id', detailProduto);
     routes.post('/produtos', createProduto);
     routes.put('/produtos/:id', updateProduto);

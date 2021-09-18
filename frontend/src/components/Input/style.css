@@ -16,6 +16,15 @@
     margin: 10px 0 10px 0;
 }
 
+.select-with-side-value{
+    display: flex;
+    align-items:flex-end;
+}
+
+.select-with-side-value div {
+    margin-right: 20px;
+}
+
 input::placeholder {
     color: #D6D7E3;
     font-weight: 500;

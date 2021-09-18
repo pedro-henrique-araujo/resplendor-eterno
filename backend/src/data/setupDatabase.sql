@@ -31,6 +31,32 @@ CREATE TABLE produto (
 
 ALTER TABLE produto ADD FOREIGN KEY (forn_doc) REFERENCES pessoa(doc);
 
+
+CREATE TABLE tipo_plano (
+    id SERIAL PRIMARY KEY,
+    descr VARCHAR(255)
+);
+
+CREATE TABLE plano (
+    id SERIAL PRIMARY KEY,
+    descr VARCHAR(255),
+    tipo_id INTEGER,
+    preco DECIMAL(18,2)
+);
+
+
+ALTER TABLE plano ADD FOREIGN KEY (tipo_id) REFERENCES tipo_plano(id);
+
+CREATE TABLE plano_produto (
+    plano_id INTEGER,
+    produto_id INTEGER,
+    qtd_prod DECIMAL,
+    PRIMARY KEY (plano_id, produto_id)
+);
+
+ALTER TABLE plano_produto ADD FOREIGN KEY (plano_id) REFERENCES plano(id);
+ALTER TABLE plano_produto ADD FOREIGN KEY (produto_id) REFERENCES produto(id);
+
 --tabelas abaixo ainda não foram criadas meu banco local
 CREATE TABLE paren (
     id SERIAL PRIMARY KEY,
@@ -84,7 +110,7 @@ CREATE TABLE fm_pag (
 CREATE TABLE titulo (
     id SERIAL PRIMARY KEY,
     venc DATE,
-    val NUMBER(18,2),
+    val DECIMAL(18,2),
     status INTEGER,
     fm_pag_id INTEGER
 );
@@ -100,7 +126,7 @@ CREATE TABLE entrada_prod (
     entrada_id INTEGER,
     produto_id INTEGER,
     qtd INTEGER,
-    val NUMBER(18,2)
+    val DECIMAL(18,2)
 );
 
 ALTER TABLE entrada_prod ADD FOREIGN KEY (entrada_id) REFERENCES entrada(id);
@@ -110,7 +136,7 @@ ALTER TABLE entrada_prod ADD FOREIGN KEY (produto_id) REFERENCES produto(id);
 CREATE TABLE entrada_pag (
     id SERIAL PRIMARY KEY,
     entrada_id INTEGER,
-    titulo_id NUMBER
+    titulo_id INTEGER
 );
 
 
@@ -130,7 +156,7 @@ CREATE TABLE saida_prod (
     saida_id INTEGER,
     produto_id INTEGER,
     qtd INTEGER,
-    val NUMBER(18,2)
+    val DECIMAL(18,2)
 );
 
 ALTER TABLE saida_prod ADD FOREIGN KEY (saida_id) REFERENCES saida(id);
@@ -146,10 +172,3 @@ CREATE TABLE saida_pag (
 ALTER TABLE saida_pag ADD FOREIGN KEY (saida_id) REFERENCES saida(id);
 ALTER TABLE saida_pag ADD FOREIGN KEY (fm_pag_id) REFERENCES fm_pag(id);
 ALTER TABLE saida_pag ADD FOREIGN KEY (titulo_id) REFERENCES titulo(id);
-
-CREATE TABLE tipo_plano (
-    id SERIAL PRIMARY KEY,
-    descr VARCHAR(255)
-);
-
-ALTER TABLE plano ADD FOREIGN KEY (plano_id)
