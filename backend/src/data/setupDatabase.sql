@@ -116,3 +116,40 @@ CREATE TABLE entrada_pag (
 
 ALTER TABLE entrada_pag ADD FOREIGN KEY (entrada_id) REFERENCES entrada(id);
 ALTER TABLE entrada_pag ADD FOREIGN KEY (titulo_id) REFERENCES titulo(id);
+
+
+CREATE TABLE saida (
+    id SERIAL PRIMARY KEY,
+    clie_doc INTEGER
+);
+
+ALTER TABLE saida ADD FOREIGN KEY (clie_doc) REFERENCES pessoa(doc);
+
+CREATE TABLE saida_prod (
+    id SERIAL PRIMARY KEY,
+    saida_id INTEGER,
+    produto_id INTEGER,
+    qtd INTEGER,
+    val NUMBER(18,2)
+);
+
+ALTER TABLE saida_prod ADD FOREIGN KEY (saida_id) REFERENCES saida(id);
+ALTER TABLE saida_prod ADD FOREIGN KEY (produto_id) REFERENCES produto(id);
+
+CREATE TABLE saida_pag (
+    id SERIAL PRIMARY KEY,
+    saida_id INTEGER,
+    fm_pag_id INTEGER,
+    titulo_id INTEGER
+);
+
+ALTER TABLE saida_pag ADD FOREIGN KEY (saida_id) REFERENCES saida(id);
+ALTER TABLE saida_pag ADD FOREIGN KEY (fm_pag_id) REFERENCES fm_pag(id);
+ALTER TABLE saida_pag ADD FOREIGN KEY (titulo_id) REFERENCES titulo(id);
+
+CREATE TABLE tipo_plano (
+    id SERIAL PRIMARY KEY,
+    descr VARCHAR(255)
+);
+
+ALTER TABLE plano ADD FOREIGN KEY (plano_id)
