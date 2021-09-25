@@ -38,3 +38,12 @@ input::placeholder {
     color: red;
     margin: 0;
 }
+
+.horizontal-input-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.horizontal-input-div > * {
+    margin-right: 20px;
+}

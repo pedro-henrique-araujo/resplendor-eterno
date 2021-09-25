@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SuccessButton, DefaultButton } from '../../../components/Button';
+import { useHistory } from 'react-router';
 import api from '../../../services/api';
 
 import { SearchInput } from '../../../components/Input';
@@ -27,6 +28,10 @@ export default function ClientesList() {
         setPage(1);
     }
 
+    function goToNew() {
+        history.push('/clientes/novo');
+    }
+
     let [list, setList] = useState([{
          doc: '07374760361',
          nome: 'Pedro Henrique',
@@ -36,7 +41,7 @@ export default function ClientesList() {
     let [page, setPage] = useState(1);
     let [numberOfPages, setNumberOfPages] = useState(0);
     let [search, setSearch] = useState('');
-
+    let history = useHistory();
 
     useEffect(() => loadList(page), []);
     useEffect(() => loadList(page), [page, search]);
@@ -50,7 +55,7 @@ export default function ClientesList() {
                         <SearchInput value={search} onChange={searchInputChange}/>
                     </div>
                     <div className="input-group">
-                        <SuccessButton icon={plusIcon} />
+                        <SuccessButton icon={plusIcon} onClick={goToNew} />
                     </div>
                 </div>
                 <table>

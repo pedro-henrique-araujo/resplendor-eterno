@@ -20,7 +20,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--default-text-color)}
     position: fixed;
     height: 100%;
     width: 100%;
-    overflow: auto;
+    overflow-x: hidden;
     margin: 0;
     display: flex;
     background: #F0F2FA;
