@@ -1,0 +1,32 @@
+.person-section {
+    color: #767676;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.person-section > :is(.address, .birthdate) {
+    margin-bottom: 7px;
+}
+
+.person-section .header > * {
+    margin-right: 15px;
+}
+
+.person-section .header b {
+    color: black;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.person-section .header div {
+    font-size: 15px;
+}
+
+.person-section address {
+    font-size: 12px;
+}
+
+.person-section .birthdate {
+    font-size: 10px;
+}
