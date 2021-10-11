@@ -193,7 +193,7 @@ export default function ClientesForm(props) {
         });
         let contatos = form.contatos.map(contato => contato.value);
         let person = { doc, nome, rg, birthDate, enderecos, contatos };
-        //props.save(person);
+        props.save(person);
     }
 
 

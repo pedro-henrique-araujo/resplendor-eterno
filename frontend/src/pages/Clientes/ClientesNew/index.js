@@ -7,78 +7,56 @@ import './style.css';
 import editIcon from '../../../assets/edit-blue.svg';
 import plusItemGreen from '../../../assets/plus-item-green.svg';
 
-function PersonSection(props) {
+function PersonSection(props) {    
+            
+    let { nome, doc, birthDate, enderecos} = props.person;
+    console.log(props.person);
+    let {rua, numResidencia } = enderecos[0];
     return (
-            <div className="person-section">
-                <div className="header children-inline">
-                    <b>{'nome'}</b>
-                    <div>{'doc'}</div>
-                    <DefaultButton onClick={() => {}} icon={'editIcon'} />
-                </div>
-                <div className="address">
-                    {'rua'}, {'numResidencia'}
-                </div>
-                <div className="birthdate">
-                    {'birthDate'}
-                </div>
+        <div className="person-section">
+            <div className="header children-inline">
+                <b>{nome}</b>
+                <div>{doc}</div>
+                <DefaultButton onClick={() => {}} icon={editIcon} />
             </div>
-        );
-    // let { nome, doc, birthDate, enderecos} = props.person;
-    // let {rua, numResidencia } = enderecos[0];
-    // return (
-    //     <div className="person-section">
-    //         <div className="header children-inline">
-    //             <b>{nome}</b>
-    //             <div>{doc}</div>
-    //             <DefaultButton onClick={() => {}} icon={editIcon} />
-    //         </div>
-    //         <div className="address">
-    //             {rua}, {numResidencia}
-    //         </div>
-    //         <div className="birthdate">
-    //             {birthDate}
-    //         </div>
-    //     </div>
-    // );
+            <div className="address">
+                {rua}, {numResidencia}
+            </div>
+            <div className="birthdate">
+                {birthDate}
+            </div>
+        </div>
+    );
 }
 
 
 export default function ClientesNew() {
     
-    function saveClient(person) {
-        setCliente(person);
-        console.log('mode', mode);
-        setMode(1);
-    }
-    
-    function saveDependente(person) {
+    let nextFunctions = {
+        saveClient(person) {
+            setCliente({...person});        
+            setMode(1);
+        },
 
-    }
-    
-    
-    function goAddDependent() {
-        setSave(saveDependente);
-        setMode(0);
+        saveDependente(person) {
+            setMode(1);
+        }
+    };
+
+    function goSaveDependente() {
+        setNextFunction('saveDependente');
     }
     
     let [mode, setMode] = useState(0);
-    let [cliente, setCliente] = useState({
-        nome: '',
-
-    });
-    let [dependentes, setDependentes] = useState([]);
-    let [save, setSave] = useState(() => {});
-
-    useEffect(() => { 
-        setSave(saveClient);
-     }, []);
+    let [cliente, setCliente] = useState({});
+    let [nextFunction, setNextFunction] = useState('saveClient');
 
 
     let modes = [
-        <ClientesForm save={save} />,
+        <ClientesForm save={nextFunctions[nextFunction]} />,
         <div>
             <div className="view-body">
-                <PersonSection person={{nome: ''}}/>
+                <PersonSection person={cliente}/>
 
                 <div className="children-inline">
                     <h3>Dependentes</h3>
