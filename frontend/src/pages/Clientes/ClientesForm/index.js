@@ -93,10 +93,6 @@ function useForm() {
                 if (length >= 255) {
                     field.error = 'Este campo deve ter no máximo 255 caracteres';
                 }
-                
-                if (length < 3) {
-                    field.error = 'Este campo deve ter no mínimo 3 caracteres';
-                }
 
                 if (length == 0) {
                     field.error = 'Este campo é obrigatório';

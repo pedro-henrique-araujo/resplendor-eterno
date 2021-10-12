@@ -56,6 +56,11 @@ function useForm() {
             if (Number.isNaN(Number(prod.qtd)) || prod.qtd <= 0) {
                 prod.error = 'Insira um valor válido para a quantidade';
             }
+
+            let prodsWithSameId = prods.filter(insideProd => prod.id == insideProd.id);
+            if (prodsWithSameId.length > 1) {
+                prod.error = 'Este produto está duplicado';
+            }
             
             if (prod.id == 0) {
                 prod.error = 'Selecione um opção';

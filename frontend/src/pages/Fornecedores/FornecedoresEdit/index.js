@@ -88,7 +88,7 @@ export default function FornecedoresEdit() {
                                 validationMessage={form.razaoError}
                             />
 
-                        <PrimaryButton icon={saveIcon} />
+                        <PrimaryButton type="submit" icon={saveIcon} />
                     </form>
                 </div>
             </div>

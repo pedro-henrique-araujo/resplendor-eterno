@@ -36,35 +36,41 @@ export default function ClientesNew() {
         saveClient(person) {
             setCliente({...person});        
             setMode(1);
+            setNextFunction('newDependente');
         },
 
         saveDependente(person) {
+            setDependentes([...dependentes, person]);
             setMode(1);
+            setNextFunction('newDependente');
+        },
+
+        newDependente() {
+            setMode(0);
+            setNextFunction('saveDependente');
         }
     };
 
-    function goSaveDependente() {
-        setNextFunction('saveDependente');
-    }
     
     let [mode, setMode] = useState(0);
     let [cliente, setCliente] = useState({});
+    let [dependentes, setDependentes] = useState([]);
     let [nextFunction, setNextFunction] = useState('saveClient');
-
+    let goNext = nextFunctions[nextFunction];
 
     let modes = [
-        <ClientesForm save={nextFunctions[nextFunction]} />,
+        <ClientesForm save={goNext} />,
         <div>
             <div className="view-body">
                 <PersonSection person={cliente}/>
 
                 <div className="children-inline">
                     <h3>Dependentes</h3>
-                    <DefaultButton onClick={() => {}} icon={plusItemGreen} />
+                    <DefaultButton onClick={goNext} icon={plusItemGreen} />
                 </div>
-                {/* {dependentes.map((dependente, index) => (
+                {dependentes.map((dependente, index) => (
                     <PersonSection key={index} person={dependente} />
-                ))} */}
+                ))}
             </div>
         </div>
     ];

@@ -194,7 +194,7 @@ export default function ProdutosNew() {
                                 validationMessage={form.estoError}
                             />
                        
-                        <PrimaryButton icon={saveIcon} />
+                        <PrimaryButton type="submit" icon={saveIcon} />
                     </form>
                 </div>
             </div>
