@@ -97,5 +97,15 @@ module.exports = {
                 success: false
             };
         }
+    },
+
+    async getSingle(doc) {
+        let data = await db.query(`
+            SELECT p.doc, cf.nome, cf.nasc FROM pessoa p
+            JOIN carac_fisica cf ON (p.doc = cf.doc)
+            WHERE p.rel = 1 AND p.doc = $1
+        `, [ doc ]);
+
+        return data[0];
     }
 }

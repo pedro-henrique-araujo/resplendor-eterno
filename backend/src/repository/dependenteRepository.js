@@ -2,64 +2,15 @@ let standardMessages = require('../utils/standardMessages');
 let db = require('../data/db');
 
 module.exports = {
-    async getList(page) {
-        let offset = (page - 1) * 10;
+    async getListByDoc(docDep) {
         let data = await db.query(`
-                SELECT
-                    p.doc,
-                    cf.nome,
-                    cf.rg,
-                    cf.sexo,
-                    cf.nasc
-                FROM pessoa p
-                JOIN carac_fisica cf ON (p.doc = cf.doc)
-                WHERE p.rel = 3
-                OFFSET $1 LIMIT 10
-        `, [offset]);
-        
-        let countPlanoResult = await db.query(`
-            SELECT count(*) AS count FROM pessoa WHERE rel = 3
-        `);
-
-        let { count } = countPlanoResult[0];
-        let numberOfPages = Math.ceil(count / 10);
-        let output = {
-            numberOfPages: numberOfPages,
-            records: data
-        };
-
-        return output;
-    },
-
-    async getListWithSearch(page, search) {
-        let offset = (page - 1) * 10;
-        let data = await db.query(`
-            SELECT
-                p.doc,
-                cf.nome,
-                cf.rg,
-                cf.sexo,
-                cf.nasc
-            FROM pessoa p
+            SELECT p.doc, cf.nome, cf.nasc FROM pessoa p
             JOIN carac_fisica cf ON (p.doc = cf.doc)
-            WHERE p.rel = 3
-            AND p.doc || lower(cf.nome) || lower(cf.rg) ~* $1
-            OFFSET $2 LIMIT 10
-        `, [search, offset]);
+            JOIN relac_dep rd ON (p.doc = rd.doc)
+                WHERE p.rel = 3 AND rd.doc_dep = $1
+        `, [ docDep ]);
 
-        let countPlanoResult = await db.query(`
-            SELECT count(*) AS count FROM pessoa WHERE rel = 3
-            AND p.doc || lower(cf.nome) || lower(cf.rg) ~* $1
-        `);
-
-        let { count } = countPlanoResult[0];
-        let numberOfPages = Math.ceil(count / 10);
-        let output = {
-            numberOfPages: numberOfPages,
-            records: data
-        };
-
-        return output;
+        return data;
     },
 
     async create(dependente) {
@@ -104,5 +55,15 @@ module.exports = {
                 success: false
             };
         }
+    },
+
+    async getSingle(doc) {
+        let data = await db.query(`
+            SELECT p.doc, cf.nome, cf.nasc FROM pessoa p
+            JOIN carac_fisica cf ON (p.doc = cf.doc)
+            WHERE p.rel = 3 AND p.doc = $1
+        `, [ doc ]);
+
+        return data[0];
     }
 };

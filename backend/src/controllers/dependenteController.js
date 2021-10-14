@@ -1,5 +1,10 @@
 let dependenteRepository = require('../repository/dependenteRepository');
-let createStandardOperations = require('./standardOperations');
+
+async function list(request, response) {
+    let { doc } = request.params;
+    let output = await dependenteRepository.getListByDoc(doc);
+    response.json(output);
+}
 
 async function createDependente(request, response) {
     let {body } = request;
@@ -14,8 +19,7 @@ async function createDependente(request, response) {
 
 
 function dependenteController(routes) {
-    let standardOperations = createStandardOperations(dependenteRepository);
-    routes.get('/dependentes', standardOperations.pagitinationList);
+    routes.get('/dependentes/:doc', list);
     routes.post('/dependentes', createDependente);
 }
 

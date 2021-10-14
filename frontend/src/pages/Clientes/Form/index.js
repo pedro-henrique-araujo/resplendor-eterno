@@ -15,14 +15,14 @@ function useForm() {
     let [nomeError, setNomeError] = useState('');
     let [rg, setRg] = useState('');
     let [rgError, setRgError] = useState('');
-    let [birthDate, setBirthDate] = useState('');
-    let [birthDateError, setBirthDateError] = useState('');
+    let [nasc, setNasc] = useState('');
+    let [nascError, setNascError] = useState('');
     let [enderecos, setEnderecos] = useState([
         {
             cep: { value: ''},
-            cidade: { value: ''},
+            muni: { value: ''},
             bairro: { value: ''},
-            rua: { value: ''},
+            logra: { value: ''},
             numResidencia: { value: ''}
         }
     ]);
@@ -62,6 +62,12 @@ function useForm() {
 
     function validateRg() {
         let message = '';
+
+        if (rg.length != 11) {
+            message = `Este campo tem ${rg.length} carateres mas deve ter 11`;
+        }
+
+
         if (rg.length == 0)
             message = 'Campo obrigatório';
     
@@ -76,7 +82,7 @@ function useForm() {
         if (rg.length == 0)
             message = 'Campo obrigatório';
     
-        setBirthDateError(message);
+        setNascError(message);
         return message;
     }
     
@@ -84,7 +90,7 @@ function useForm() {
         let messages = [];
 
         for (let endereco of enderecos) {
-            let { cep, cidade, bairro, rua, numResidencia } = endereco;
+            let { cep, muni, bairro, logra, numResidencia } = endereco;
             function critisize(field) {
                 let { value: { length } = '' } = field;
                 field.error = '';
@@ -100,7 +106,7 @@ function useForm() {
                 return field.error;
             };
 
-            let errors = [cep, cidade, bairro, rua, numResidencia].map(critisize);
+            let errors = [cep, muni, bairro, logra, numResidencia].map(critisize);
             messages.push(errors.join(''));
         }
         setEnderecos([...enderecos]);
@@ -143,13 +149,13 @@ function useForm() {
         let docIsValid = validate(validateDoc);
         let nomeIsValid = validate(validateNome);
         let rgIsValid = validate(validateRg);
-        let birthDateIsValid = validate(validateBirthDate);
+        let nascIsValid = validate(validateBirthDate);
         let enderecosIsValid = validate(validateEnderecos);
         let contatosIsValid = validate(validateContatos);
         let isValid = docIsValid 
             && nomeIsValid 
             && rgIsValid 
-            && birthDateIsValid 
+            && nascIsValid 
             && enderecosIsValid
             && contatosIsValid;
         if (isValid) 
@@ -166,9 +172,9 @@ function useForm() {
         rg,
         setRg,
         rgError,
-        birthDate,
-        setBirthDate,
-        birthDateError,
+        nasc,
+        setNasc,
+        nascError,
         enderecos,
         setEnderecos,
         contatos,
@@ -178,9 +184,9 @@ function useForm() {
 }
 
 
-export default function ClientesForm(props) { 
+export default function Form(props) { 
     async function submit() {
-        let {doc, nome, rg, birthDate } = form;
+        let {doc, nome, rg, nasc } = form;
         let enderecos = form.enderecos.map(endereco => {
             let output = {};
             for (let key in endereco) {
@@ -189,7 +195,7 @@ export default function ClientesForm(props) {
             return output;
         });
         let contatos = form.contatos.map(contato => contato.value);
-        let person = { doc, nome, rg, birthDate, enderecos, contatos };
+        let person = { doc, nome, rg, nasc, enderecos, contatos };
         props.save(person);
     }
 
@@ -205,9 +211,9 @@ export default function ClientesForm(props) {
     function newEndereco() {
         form.setEnderecos([...form.enderecos, {
             cep: { value: ''},
-            cidade: { value: ''},
+            muni: { value: ''},
             bairro: { value: ''},
-            rua: { value: ''},
+            logra: { value: ''},
             numResidencia: { value: ''}
         }]);
 
@@ -269,9 +275,9 @@ export default function ClientesForm(props) {
 
                 <DateWithLabel
                     label="Data de nascimento *" 
-                    value={form.birthDate} 
-                    onChange={event => form.setBirthDate(event.target.value)}
-                    validationMessage={form.birthDateError}
+                    value={form.nasc} 
+                    onChange={event => form.setNasc(event.target.value)}
+                    validationMessage={form.nascError}
                 />
 
                 <div className="children-inline">                        
@@ -306,12 +312,12 @@ export default function ClientesForm(props) {
                             />
 
                             <TextWithLabel
-                                label="Cidade *"
-                                value={endereco.cidade.value}
-                                name="cidade"
+                                label="Municipio *"
+                                value={endereco.muni.value}
+                                name="muni"
                                 data-index={index}
                                 onChange={changeEnderecoValue}
-                                validationMessage={endereco.cidade.error}
+                                validationMessage={endereco.muni.error}
                             />
 
                             <TextWithLabel
@@ -324,12 +330,12 @@ export default function ClientesForm(props) {
                             />
 
                             <TextWithLabel
-                                label="Rua *"
-                                value={endereco.rua.value}
-                                name="rua"
+                                label="Lograduro *"
+                                value={endereco.logra.value}
+                                name="logra"
                                 data-index={index}
                                 onChange={changeEnderecoValue}
-                                validationMessage={endereco.rua.error}
+                                validationMessage={endereco.logra.error}
                             />
 
                             <TextWithLabel

@@ -13,6 +13,8 @@ import FornecedoresNew from './pages/Fornecedores/FornecedoresNew';
 import FornecedoresEdit from './pages/Fornecedores/FornecedoresEdit';
 import ClientesList from './pages/Clientes/ClientesList';
 import ClientesNew from './pages/Clientes/ClientesNew';
+import ClientesDetail from './pages/Clientes/ClientesDetail';
+import DependentesNew from './pages/Clientes/DependentesNew';
 import SaidasList from './pages/Saidas/SaidasList';
 import EntradasList from './pages/Entradas/EntradasList';
 import ContratosList from './pages/Contratos/ContratosList';
@@ -34,6 +36,8 @@ export default function Routes() {
                     <Route path="/fornecedores/editar/:doc" component={FornecedoresEdit} />
                     <Route exact path="/clientes" component={ClientesList} />
                     <Route path="/clientes/novo" component={ClientesNew} />
+                    <Route path="/clientes/:doc" component={ClientesDetail} />
+                    <Route path="/dependentes/novo/:doc" component={DependentesNew} />
                     <Route exact path="/saidas" component={SaidasList} />
                     <Route exact path="/entradas" component={EntradasList} />
 

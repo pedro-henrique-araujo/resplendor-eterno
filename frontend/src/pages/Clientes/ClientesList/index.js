@@ -12,8 +12,8 @@ import editIcon from '../../../assets/edit.svg';
 export default function ClientesList() {
     async function loadListAsync(page) {
         let { data } = await api
-            .get(`/list?page=${page}&search=${search}`);
-        setList(data.records);
+            .get(`/clientes?page=${page}&search=${search}`);
+        setClientes(data.records);
         setNumberOfPages(data.numberOfPages);
     }
 
@@ -32,12 +32,7 @@ export default function ClientesList() {
         history.push('/clientes/novo');
     }
 
-    let [list, setList] = useState([{
-         doc: '07374760361',
-         nome: 'Pedro Henrique',
-         contato: '(85) 9 8844-7999',
-         endereco: 'Rua da Sardinha, 22'
-    }]);
+    let [clientes, setClientes] = useState([]);
     let [page, setPage] = useState(1);
     let [numberOfPages, setNumberOfPages] = useState(0);
     let [search, setSearch] = useState('');
@@ -69,12 +64,12 @@ export default function ClientesList() {
                         </tr>
                     </thead>
                     <tbody>
-                    {list?.map(item => (
+                    {clientes?.map(cliente => (
                         <tr>
-                            <td>{item.doc}</td>
-                            <td>{item.nome}</td>
-                            <td>{item.contato}</td>
-                            <td>{item.endereco}</td>
+                            <td>{cliente.doc}</td>
+                            <td>{cliente.nome}</td>
+                            <td>{'{contato}'}</td>
+                            <td>{'{endereco}'}</td>
                             <td>
                                 <DefaultButton onClick={() => {}} icon={editIcon} />
                             </td>
