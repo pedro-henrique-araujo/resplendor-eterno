@@ -1,24 +1,6 @@
 let produtoRepository = require("../repository/produtoRepository");
+let createStandardOperations = require('./standardOperations');
 
-async function listProdutos(request, response) {
-    let page = request.query.page || 1;
-    let { search } = request.query;
-
-    
-    if (search) {
-        let output = await produtoRepository.getListWithSearch(page, search);
-        response.json(output);
-        return;
-    } 
-    
-    let output = await produtoRepository.getList(page);
-    response.json(output);
-}
-
-async function getProdutosOptions(request, response) {
-    let records = await produtoRepository.getOptions();
-    response.json(records);
-} 
 
 async function detailProduto(request, response) {
     let { id } = request.params;
@@ -47,8 +29,10 @@ async function updateProduto(request, response) {
 }
 
 function produtoController(routes) {
-    routes.get('/produtos', listProdutos);
-    routes.get('/produtos/options', getProdutosOptions);
+    let standardOperations = createStandardOperations(produtoRepository);
+    let { pagitinationList, getOptions } = standardOperations;
+    routes.get('/produtos', pagitinationList);
+    routes.get('/produtos/options', getOptions);
     routes.get('/produtos/:id', detailProduto);
     routes.post('/produtos', createProduto);
     routes.put('/produtos/:id', updateProduto);

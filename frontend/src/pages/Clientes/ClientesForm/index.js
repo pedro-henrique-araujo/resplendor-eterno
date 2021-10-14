@@ -129,11 +129,12 @@ function useForm() {
             messages.push(message);
         }
         setContatos([...contatos]);
-        return messages.join();
+        return messages.join('');
     }
 
     function validate(validationFunction) {
         let validationMessage = validationFunction();
+        console.log(validationMessage);
         return validationMessage.length == 0;
     }
 
@@ -241,11 +242,9 @@ export default function ClientesForm(props) {
 
     let form = useForm();
 
-    let history = useHistory();
-
     return (
         <div className="view-body">
-            <MutedButton icon={arrowLeftIcon} onClick={history.goBack}/>
+            <MutedButton icon={arrowLeftIcon} onClick={props.goBack}/>
             <form onSubmit={event => form.handleSubmit(event, submit)}>
                 <h3>Dados Pessoais</h3>
                 <TextWithLabel

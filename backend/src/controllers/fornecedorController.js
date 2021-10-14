@@ -1,23 +1,6 @@
 let fornecedorRepository = require('../repository/fornecedorRepository');
+let createStandardOperations = require('./standardOperations');
 
-async function listFornecedores(request, response) {
-    let page = request.query.page || 1;   
-    let { search } = request.query;
-    if (search) {
-        let output = await fornecedorRepository.getListWithSearch(page, search);
-        response.json(output);
-        return;
-    }
-
-
-    let output = await fornecedorRepository.getList(page);
-    response.json(output);
-}
-
-async function getFornecedoresOptions(request, response) {
-    let records = await fornecedorRepository.getOptions();
-    response.json(records);
-}
 
 async function detailFornecedor(request, response) {
     let { doc } = request.params;
@@ -58,8 +41,10 @@ async function deleteFornecedor(request, response) {
 }
 
 function fornecedorController(routes) {
-    routes.get('/fornecedores', listFornecedores);
-    routes.get('/fornecedores/options', getFornecedoresOptions);
+    let standardOperations = createStandardOperations(fornecedorRepository);
+    let { pagitinationList, getOptions } = standardOperations;
+    routes.get('/fornecedores', pagitinationList);
+    routes.get('/fornecedores/options', getOptions);
     routes.get('/fornecedores/:doc', detailFornecedor);
     routes.post('/fornecedores', createFornecedor);
     routes.put('/fornecedores/:doc', updateFornecedor);

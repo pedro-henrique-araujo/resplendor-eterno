@@ -1,23 +1,5 @@
 let planoRepository = require('../repository/planoRepository');
-
-async function listPlanos(request, response) {
-    let page = request.query.page || 1;
-    let { search } = request.query;
-
-    if (search) {
-        let output = await planoRepository.getListWithSearch(page, search);
-        response.json(output);
-        return;
-    } 
-    
-    let output = await planoRepository.getList(page);
-    response.json(output);
-}
-
-async function getPlanosOptions(request, response) {
-    let records = await planoRepository.getOptions();
-    response.json(records);
-}
+let createStandardOperations = require('./standardOperations');
 
 async function createPlano(request, response) {
     let { body } = request;
@@ -32,8 +14,9 @@ async function createPlano(request, response) {
 }
 
 function planoController(routes) {
-    routes.get('/planos', listPlanos);
-    routes.get('/planos/options', getPlanosOptions);
+    let standardOperations = createStandardOperations(planoRepository);
+    let { pagitinationList } = standardOperations;
+    routes.get('/planos', pagitinationList);
     routes.post('/planos', createPlano);
 }
 

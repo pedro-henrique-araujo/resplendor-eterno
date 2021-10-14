@@ -1,12 +1,9 @@
 let tipoPlanoRepository = require('../repository/tipoPlanoRepostory');
-
-async function getTiposPlanoOptions(request, response) {
-    let records = await tipoPlanoRepository.getOptions();
-    response.json(records);
-}
+let createStandardOperations = require('./standardOperations');
 
 function tipoPlanoController(routes) {
-    routes.get('/tipos-plano/options', getTiposPlanoOptions);
+    let standardOperations = createStandardOperations(tipoPlanoRepository);
+    routes.get('/tipos-plano/options', standardOperations.getOptions);
 }
 
 module.exports = tipoPlanoController;

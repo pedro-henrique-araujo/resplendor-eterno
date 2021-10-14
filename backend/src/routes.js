@@ -4,10 +4,14 @@ let produtoController = require('./controllers/produtoController');
 let fornecedorController = require('./controllers/fornecedorController');
 let tipoPlanoController = require('./controllers/tipoPlanoController');
 let planoController = require('./controllers/planoController');
+let clienteController = require('./controllers/clienteController');
+let dependenteController = require('./controllers/dependenteController');
 
 produtoController(routes);
 fornecedorController(routes);
 tipoPlanoController(routes);
 planoController(routes);
+clienteController(routes);
+dependenteController(routes);
 
 module.exports = routes;

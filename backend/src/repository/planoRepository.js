@@ -88,7 +88,6 @@ module.exports = {
                 success: true
             };
         } catch (error) {
-            console.log(error);
             return {
                 message: standardMessages.recordCouldntBeCreated,
                 success: false

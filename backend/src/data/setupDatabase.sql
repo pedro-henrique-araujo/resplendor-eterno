@@ -57,7 +57,7 @@ CREATE TABLE plano_produto (
 ALTER TABLE plano_produto ADD FOREIGN KEY (plano_id) REFERENCES plano(id);
 ALTER TABLE plano_produto ADD FOREIGN KEY (produto_id) REFERENCES produto(id);
 
---tabelas abaixo ainda não foram criadas meu banco local
+--tabelas abaixo ainda não foram criadas meu banco local linux
 CREATE TABLE paren (
     id SERIAL PRIMARY KEY,
     descr VARCHAR(255)
@@ -66,12 +66,12 @@ CREATE TABLE paren (
 CREATE TABLE relac_dep (
     doc VARCHAR(14),
     doc_dep VARCHAR(14),
-    parent_id INTEGER
+    paren_id INTEGER
 );
 
 ALTER TABLE relac_dep ADD FOREIGN KEY (doc) REFERENCES pessoa(doc);
 ALTER TABLE relac_dep ADD FOREIGN KEY (doc_dep) REFERENCES pessoa(doc);
-ALTER TABLE relac_dep ADD FOREIGN KEY (parent_id) REFERENCES paren(id);
+ALTER TABLE relac_dep ADD FOREIGN KEY (paren_id) REFERENCES paren(id);
 
 
 CREATE TABLE endereco (
@@ -146,7 +146,7 @@ ALTER TABLE entrada_pag ADD FOREIGN KEY (titulo_id) REFERENCES titulo(id);
 
 CREATE TABLE saida (
     id SERIAL PRIMARY KEY,
-    clie_doc INTEGER
+    clie_doc VARCHAR(14)
 );
 
 ALTER TABLE saida ADD FOREIGN KEY (clie_doc) REFERENCES pessoa(doc);
@@ -172,3 +172,28 @@ CREATE TABLE saida_pag (
 ALTER TABLE saida_pag ADD FOREIGN KEY (saida_id) REFERENCES saida(id);
 ALTER TABLE saida_pag ADD FOREIGN KEY (fm_pag_id) REFERENCES fm_pag(id);
 ALTER TABLE saida_pag ADD FOREIGN KEY (titulo_id) REFERENCES titulo(id);
+
+
+ALTER TABLE carac_fisica ADD nasc DATE;
+
+
+CREATE OR REPLACE FUNCTION create_cliente
+(
+	p_doc VARCHAR(14),
+	p_nome VARCHAR(255),
+	p_rg VARCHAR(11),
+	p_sexo INTEGER,
+	p_nasc DATE
+) 
+RETURNS VARCHAR(255) AS $$
+	BEGIN
+		INSERT INTO pessoa
+		VALUES
+		(p_doc, 1);
+		
+		INSERT INTO carac_fisica
+		VALUES
+		(p_doc, p_nome, p_rg, p_sexo, p_nasc);
+		RETURN p_doc;
+	END;
+$$ LANGUAGE plpgsql;

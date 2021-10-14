@@ -51,15 +51,28 @@ export default function ClientesNew() {
         }
     };
 
+
+    let backFunctions = {
+        backToListing() {
+
+        },
+
+        backToMain() {
+            setMode(0);
+            setNextFunction('saveDependente');
+        }
+    };
+
     
     let [mode, setMode] = useState(0);
     let [cliente, setCliente] = useState({});
     let [dependentes, setDependentes] = useState([]);
     let [nextFunction, setNextFunction] = useState('saveClient');
+    let [backFunction, setBackFunction] = usestate('backToListing');
     let goNext = nextFunctions[nextFunction];
 
     let modes = [
-        <ClientesForm save={goNext} />,
+        <ClientesForm goBack={goBack} save={goNext} />,
         <div>
             <div className="view-body">
                 <PersonSection person={cliente}/>
