@@ -16,6 +16,7 @@ function createStandardOperations(repository) {
 
         async getOptions(request, response) {
             let records = await repository.getOptions();
+            
             response.json(records);
         }
     };

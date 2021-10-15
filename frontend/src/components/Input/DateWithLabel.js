@@ -14,7 +14,7 @@ export default function DateWithLabel(props) {
                 type="date"
                 disabled={props.disabled}
                 value={value}
-                max={max}                
+                               
                 onChange={props.onChange}
                 />
             <p className="validation-message">

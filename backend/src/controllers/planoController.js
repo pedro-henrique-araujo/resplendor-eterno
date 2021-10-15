@@ -15,8 +15,9 @@ async function createPlano(request, response) {
 
 function planoController(routes) {
     let standardOperations = createStandardOperations(planoRepository);
-    let { pagitinationList } = standardOperations;
+    let { pagitinationList, getOptions } = standardOperations;
     routes.get('/planos', pagitinationList);
+    routes.get('/planos/options', getOptions);
     routes.post('/planos', createPlano);
 }
 

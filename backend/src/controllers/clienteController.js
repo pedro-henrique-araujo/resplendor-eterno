@@ -22,7 +22,9 @@ async function createCliente(request, response) {
 
 function clienteController(routes) {
     let standardOperations = createStandardOperations(clienteRepository);
-    routes.get('/clientes', standardOperations.pagitinationList);
+    let { pagitinationList, getOptions } = standardOperations;
+    routes.get('/clientes', pagitinationList);
+    routes.get('/clientes/options', getOptions);
     routes.get('/clientes/:doc', detailCliente)
     routes.post('/clientes', createCliente);
 }

@@ -18,6 +18,7 @@ import DependentesNew from './pages/Clientes/DependentesNew';
 import SaidasList from './pages/Saidas/SaidasList';
 import EntradasList from './pages/Entradas/EntradasList';
 import ContratosList from './pages/Contratos/ContratosList';
+import ContratosNew from './pages/Contratos/ContratosNew';
 
 export default function Routes() {
     return (
@@ -30,6 +31,7 @@ export default function Routes() {
                     <Route path="/produtos/novo" component={ProdutosNew}/>
                     <Route exact path="/planos" component={PlanosList}/>
                     <Route exact path="/contratos" component={ContratosList}/>
+                    <Route exact path="/contratos/novo" component={ContratosNew}/>
                     <Route path="/planos/novo" component={PlanosNew}/>
                     <Route exact path="/fornecedores" component={FornecedoresList} />
                     <Route path="/fornecedores/novo" component={FornecedoresNew} />

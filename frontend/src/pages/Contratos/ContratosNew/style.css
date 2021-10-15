@@ -1,0 +1,28 @@
+.text-muted {
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+.dependent-option {
+    display: block;
+    cursor: pointer;
+    height: 44px;
+    width: 521px;
+    margin: 25px 0px;
+    border-radius: 12px;
+    border: 1px var(--color-muted) solid;
+    background: #b9b9b91e;
+    opacity: .7;
+    padding: 0px 15px;
+    color: var(--color-muted);
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.dependent-option-active {  
+    border: 1px var(--color-success) solid;
+    background: #4bde971e;
+    color: var(--default-text-color);
+
+}

@@ -64,6 +64,19 @@ module.exports = {
         return output;
     },
 
+    async getOptions() {
+        let sql = `
+            SELECT
+                p.doc,
+                cf.nome
+            FROM pessoa p
+            JOIN carac_fisica cf ON (p.doc = cf.doc)
+            WHERE p.rel = 1
+        `;
+        let data = await db.query(sql);
+        return data;
+    },
+
     async create(cliente) {
         let {doc, nome, rg, sexo, nasc, enderecos} = cliente;
         try {
