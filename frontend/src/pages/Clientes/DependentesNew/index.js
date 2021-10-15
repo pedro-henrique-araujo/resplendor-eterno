@@ -12,7 +12,7 @@ export default function ClientesNew() {
         let objectToSend = {
             ...person,
             docDep: doc,
-            parentId: 1
+            parenId: 1
         };
         await api.post('/dependentes', objectToSend);
         history.push('/clientes/' + doc);
