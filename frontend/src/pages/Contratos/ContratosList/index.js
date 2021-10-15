@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SuccessButton } from '../../../components/Button';
 import api from '../../../services/api';
-
+import moment from 'moment';
 import plusIcon from '../../../assets/plus.svg';
 import {SearchInput} from '../../../components/Input';
 import PaginationInput from '../../../components/PaginationInput';
@@ -9,8 +9,8 @@ import PaginationInput from '../../../components/PaginationInput';
 export default function ContratosList() {
     async function loadListAsync(page) {
         let { data } = await api
-            .get(`/list?page=${page}&search=${search}`);
-        setList(data.records);
+            .get(`/contratos?page=${page}&search=${search}`);
+        setContratos(data.records);
         setNumberOfPages(data.numberOfPages);
     }
 
@@ -25,7 +25,7 @@ export default function ContratosList() {
         setPage(1);
     }
 
-    let [list, setList] = useState([]);
+    let [contratos, setContratos] = useState([]);
     let [page, setPage] = useState(1);
     let [numberOfPages, setNumberOfPages] = useState(0);
     let [search, setSearch] = useState('');
@@ -53,13 +53,19 @@ export default function ContratosList() {
                             <th>Nome</th>
                             <th>Plano</th>
                             <th>Número de dependentes</th>
+                            <th>Vencimento</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {list?.map(item => (
+                    {contratos?.map(({id, cliente, plano, venc, countDependentes}) => (
                         <tr>
-                            <td>{item.id}</td>
+                            <td>{id}</td>
+                            <td>{cliente}</td>
+                            <td>{plano}</td>
+                            <td>{countDependentes}</td>
+                            <td>{moment(venc).format('DD/MM/YYYY')}</td>
+                            <td></td>
                         </tr>
                     ))}
                     </tbody>

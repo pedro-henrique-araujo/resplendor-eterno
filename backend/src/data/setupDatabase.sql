@@ -86,7 +86,7 @@ ALTER TABLE endereco ADD FOREIGN KEY (doc) REFERENCES pessoa(doc);
 CREATE TABLE contrato (
     id SERIAL PRIMARY KEY,
     plano_id INTEGER,
-    clie_doc INTEGER,
+    clie_doc VARCHAR(14),
     venc DATE
 );
 

@@ -9,13 +9,13 @@ import './style.css';
 
 function useForm() {
     let [clientes, setClientes] = useState([]);
-    let [clienteDoc, setClienteDoc] = useState('0');
-    let [clienteDocError, setClienteDocError] = useState('');
+    let [clieDoc, setClieDoc] = useState('0');
+    let [clieDocError, setClieDocError] = useState('');
     let [planos, setPlanos] = useState([]);
     let [planoId, setPlanoId] = useState('0');
     let [planoIdError, setPlanoIdError] = useState('');
-    let [vencimento, setVencimento] = useState('');
-    let [vencimentoError, setVencimentoError] = useState('');
+    let [venc, setVenc] = useState('');
+    let [vencError, setVencError] = useState('');
     let [dependentes, setDependentes] = useState([]);
     
     function updateDependentesOptions(options) {
@@ -39,20 +39,20 @@ function useForm() {
         return message;
     }
 
-    function validateClienteDoc() {    
-        return validateRequiredSelect(clienteDoc, setClienteDocError);
+    function validateClieDoc() {    
+        return validateRequiredSelect(clieDoc, setClieDocError);
     }
 
     function validatePlanoId() {
         return validateRequiredSelect(planoId, setPlanoIdError);
     }
 
-    function validateVencimento() {
-        let message = ''
-        if (vencimento.length == 0) {
-            message =   'Preencha este campo';
+    function validateVenc() {
+        let message = '';
+        if (venc.length == 0) {
+            message = 'Preencha este campo';
         }
-        setVencimentoError(message);
+        setVencError(message);
         return message;
     }
 
@@ -63,27 +63,27 @@ function useForm() {
 
     function handleSubmit(event, postValidationCallback) {
         event.preventDefault();
-        let clienteDocIsValid = validate(validateClienteDoc);
+        let clieDocIsValid = validate(validateClieDoc);
         let planoIdIsValid = validate(validatePlanoId);
-        let vencimentoIsValid = validate(validateVencimento);
-        if (clienteDocIsValid && planoIdIsValid && vencimentoIsValid) 
+        let vencIsValid = validate(validateVenc);
+        if (clieDocIsValid && planoIdIsValid && vencIsValid) 
             postValidationCallback(event);
     }
 
     return {
         clientes,
         setClientes,
-        clienteDoc,
-        setClienteDoc,
-        clienteDocError,
+        clieDoc,
+        setClieDoc,
+        clieDocError,
         planos,
         setPlanos,
         planoId,
         setPlanoId,
         planoIdError,
-        vencimento,
-        setVencimento,
-        vencimentoError,
+        venc,
+        setVenc,
+        vencError,
         dependentes,
         setDependentes,
         updateDependentesOptions,
@@ -95,9 +95,18 @@ function useForm() {
 
 export default function ContratosNew() { 
     async function submit() {
-        let { field1, field2 } = form;
-        await api.post('/create', { field1, field2 });
-        history.push('/list');
+        let { clieDoc, planoId, venc } = form;
+        let dependentes = form.dependentes
+            .filter(d => d.selected)
+            .map(d => d.option.doc);
+
+        await api.post('/contratos', { 
+            clieDoc: clieDoc,
+            planoId: planoId,
+            venc: venc,
+            dependentes: dependentes
+        });
+        history.push('/contratos');
     }
 
     async function getOptions(path, setFunction) {
@@ -116,15 +125,15 @@ export default function ContratosNew() {
     }, []);
 
     useEffect(() => {
-        let {clienteDoc, updateDependentesOptions} = form;
-        if (clienteDoc == "0") {
+        let {clieDoc, updateDependentesOptions} = form;
+        if (clieDoc == "0") {
             updateDependentesOptions([]);
             return;
         }        
-        let url = '/dependentes/' + clienteDoc;
+        let url = '/dependentes/' + clieDoc;
         getOptions(url, updateDependentesOptions);
-    }, [form.clienteDoc]);
-
+    }, [form.clieDoc]);
+    
     return (
         <div>
             <h2>Novo Contrato</h2>
@@ -134,9 +143,9 @@ export default function ContratosNew() {
                     <form onSubmit={event => form.handleSubmit(event, submit)}>
                         <SelectWithLabel
                                 label="Cliente *"
-                                value={form.clienteDoc}
-                                onChange={event => form.setClienteDoc(event.target.value)}
-                                validationMessage={form.clienteDocError}
+                                value={form.clieDoc}
+                                onChange={event => form.setClieDoc(event.target.value)}
+                                validationMessage={form.clieDocError}
                             >
                                 <option value="0">Selecione um opção...</option>
                                 {form.clientes.map(({doc, nome}) => (
@@ -156,9 +165,9 @@ export default function ContratosNew() {
                             </SelectWithLabel>
                         <DateWithLabel 
                             label="Data de vencimento"
-                            value={form.vencimento}
-                            onChange={event => form.setVencimento(event.target.value)}
-                            validationMessage={form.vencimentoError}
+                            value={form.venc}
+                            onChange={event => form.setVenc(event.target.value)}
+                            validationMessage={form.vencError}
                         />
 
                         {form.dependentes.length > 0 ? (
@@ -174,7 +183,8 @@ export default function ContratosNew() {
                         
                         {form.dependentes.map(({selected, option: { doc, nome }}) => (
                             <button 
-                                key={doc} 
+                                key={doc}
+                                type="button"
                                 className={'dependent-option' + (selected ? ' dependent-option-active' : '')}
                                 onClick={() => form.toggleDependenteOption(doc)}>
                                 {nome}

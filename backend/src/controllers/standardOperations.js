@@ -1,15 +1,14 @@
 function createStandardOperations(repository) {
     return {
-        async pagitinationList(request, response) {
+        async paginationList(request, response) {
             let page = request.query.page || 1;
-            let { search } = request.query;        
+            let { search } = request.query;     
             
             if (search) {
                 let output = await repository.getListWithSearch(page, search);
                 response.json(output);
                 return;
-            } 
-            
+            }
             let output = await repository.getList(page);
             response.json(output);
         },

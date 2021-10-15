@@ -30,8 +30,8 @@ async function updateProduto(request, response) {
 
 function produtoController(routes) {
     let standardOperations = createStandardOperations(produtoRepository);
-    let { pagitinationList, getOptions } = standardOperations;
-    routes.get('/produtos', pagitinationList);
+    let { paginationList, getOptions } = standardOperations;
+    routes.get('/produtos', paginationList);
     routes.get('/produtos/options', getOptions);
     routes.get('/produtos/:id', detailProduto);
     routes.post('/produtos', createProduto);

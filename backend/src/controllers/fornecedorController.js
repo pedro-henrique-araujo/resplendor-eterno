@@ -42,8 +42,8 @@ async function deleteFornecedor(request, response) {
 
 function fornecedorController(routes) {
     let standardOperations = createStandardOperations(fornecedorRepository);
-    let { pagitinationList, getOptions } = standardOperations;
-    routes.get('/fornecedores', pagitinationList);
+    let { paginationList, getOptions } = standardOperations;
+    routes.get('/fornecedores', paginationList);
     routes.get('/fornecedores/options', getOptions);
     routes.get('/fornecedores/:doc', detailFornecedor);
     routes.post('/fornecedores', createFornecedor);

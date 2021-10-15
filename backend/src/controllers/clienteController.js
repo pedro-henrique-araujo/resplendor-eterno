@@ -22,8 +22,8 @@ async function createCliente(request, response) {
 
 function clienteController(routes) {
     let standardOperations = createStandardOperations(clienteRepository);
-    let { pagitinationList, getOptions } = standardOperations;
-    routes.get('/clientes', pagitinationList);
+    let { paginationList, getOptions } = standardOperations;
+    routes.get('/clientes', paginationList);
     routes.get('/clientes/options', getOptions);
     routes.get('/clientes/:doc', detailCliente)
     routes.post('/clientes', createCliente);

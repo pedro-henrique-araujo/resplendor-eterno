@@ -3,6 +3,7 @@ let db = require('../data/db');
 
 module.exports = {
     async getList(page) {
+        
         let offset = (page - 1) * 10;
         let params = [offset];
         let data = await db.query(`
@@ -18,11 +19,11 @@ module.exports = {
             OFFSET $1 LIMIT 10
         `, params);
 
-        let countPlanoResult = await db.query(`
+        let countProdutoResult = await db.query(`
             SELECT count(*) AS count FROM pessoa WHERE rel = 1
         `);
 
-        let { count } = countPlanoResult[0];
+        let { count } = countProdutoResult[0];
         let numberOfPages = Math.ceil(count / 10);
         let output = {
             numberOfPages: numberOfPages,
@@ -34,6 +35,7 @@ module.exports = {
     },
 
     async getListWithSearch(page, search) {
+        
         let offset = (page - 1) * 10;
         let data = await db.query(`
             SELECT
