@@ -197,3 +197,86 @@ RETURNS VARCHAR(255) AS $$
 		RETURN p_doc;
 	END;
 $$ LANGUAGE plpgsql;
+
+CREATE TABLE contrato_titulo (
+    id SERIAL PRIMARY KEY,
+    contrato_id INTEGER,
+    titulo_id INTEGER,
+    codbar INTEGER
+);
+
+ALTER TABLE contrato_titulo ADD FOREIGN KEY (contrato_id) REFERENCES contrato(id);
+ALTER TABLE contrato_titulo ADD FOREIGN KEY (titulo_id) REFERENCES titulo(id);
+
+
+
+CREATE OR REPLACE FUNCTION create_contrato_titulo(
+    p_venc DATE, 
+    p_val DECIMAL(18, 2), 
+    p_fm_pag_id INTEGER, 
+    p_contrato_id INTEGER
+) RETURNS INTEGER AS $$ 
+DECLARE
+	v_next_titulo_id INTEGER;
+BEGIN
+	SELECT nextval('titulo_id_seq') INTO v_next_titulo_id;
+	INSERT INTO titulo VALUES
+	(
+		v_next_titulo_id,
+		p_venc, 
+		p_val, 
+		0, 
+		1
+	);
+
+	INSERT INTO contrato_titulo
+	(contrato_id, titulo_id, codbar)
+	VALUES
+	(p_contrato_id, v_next_titulo_id, 0);
+    RETURN v_next_titulo_id;
+END;
+$$ LANGUAGE plpgsql
+
+CREATE OR REPLACE FUNCTION generate_contrato_titulo(
+    p_contrato contrato, 
+    p_plano plano) 
+RETURNS INTEGER AS $$
+DECLARE 
+	v_number_of_installments INTEGER;
+	v_next_titulo_id INTEGER;
+BEGIN 
+	v_number_of_installments := (p_contrato.venc - CURRENT_DATE) / 30;
+	FOR i IN 1..v_number_of_installments LOOP
+		create_contrato_titulo(
+			CURRENT_DATE + INTERVAL '1 MONTH' * i,
+			p_plano.preco / v_number_of_installments,
+			1,
+			p_contrato.id
+		);
+	END LOOP;
+	
+	RETURN p_contrato.id;
+END;
+$$ LANGUAGE plpgsql
+
+CREATE OR REPLACE FUNCTION process_contrato(p_contrato_id INTEGER) 
+RETURNS INTEGER AS $$
+DECLARE
+	v_contrato contrato;
+	v_plano plano;
+	
+	v_next_titulo_id INTEGER;
+BEGIN
+	SELECT * INTO v_contrato 
+	FROM contrato 
+	WHERE id = p_contrato_id
+	LIMIT 1;
+		
+	SELECT * INTO v_plano
+	FROM plano
+	WHERE id = v_contrato.plano_id
+	LIMIT 1;
+	
+	RETURN generate_contrato_titulo(v_contrato, v_plano);
+END;
+$$ LANGUAGE plpgsql
