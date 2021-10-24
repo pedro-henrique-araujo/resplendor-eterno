@@ -14,11 +14,19 @@ async function createContrato(request, response) {
 
 }
 
+async function processContrato(request, response) {
+    let { id } = request.params;
+
+    let result = await contratoRepository.process(id);
+    response.status(201).json(result);
+}
+
 function contratoController(routes) {
     let standardOperations = createStandardOperations(contratoRepository);
     let { paginationList } = standardOperations;
     routes.get('/contratos', paginationList);
     routes.post('/contratos', createContrato);
+    routes.post('/contratos/process/:id', processContrato);
 }
 
 module.exports = contratoController;
