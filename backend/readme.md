@@ -1,9 +1,9 @@
 #Installing postgres
 
-1 - Windows
+- Windows
 Download installer on https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 
-2 - Linux Ubuntu
+- Linux Ubuntu
 Execute the following commands
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -15,7 +15,7 @@ sudo apt-get -y install postgresql
 
 1 - Create database and user
 Enter PostgreSQL and execute the following SQL commands:
-* CREATE DATABASE replendor_eterno;
+* CREATE DATABASE resplendor_eterno;
 * CREATE USER pedro WITH ENCRYPTED PASSWORD '12345';
 * GRANT ALL PRIVILEGES ON DATABASE resplendor_eterno TO pedro;
 
