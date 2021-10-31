@@ -7,20 +7,12 @@ module.exports = {
         let offset = (page - 1) * 10;
         let params = [offset];
         let data = await db.query(`
-            SELECT
-                p.doc,
-                cf.nome,
-                cf.rg,
-                cf.sexo,
-                cf.nasc
-            FROM pessoa p
-            JOIN carac_fisica cf ON (p.doc = cf.doc)
-            WHERE p.rel = 1
+            SELECT * FROM vw_cliente
             OFFSET $1 LIMIT 10
         `, params);
 
         let countProdutoResult = await db.query(`
-            SELECT count(*) AS count FROM pessoa WHERE rel = 1
+            SELECT count(*) AS count FROM vw_cliente
         `);
 
         let { count } = countProdutoResult[0];
@@ -38,23 +30,14 @@ module.exports = {
         
         let offset = (page - 1) * 10;
         let data = await db.query(`
-            SELECT
-                p.doc,
-                cf.nome,
-                cf.rg,
-                cf.sexo,
-                cf.nasc
-            FROM pessoa p
-            JOIN carac_fisica cf ON (p.doc = cf.doc)
-            WHERE p.rel = 1
-            AND p.doc || lower(cf.nome) || lower(cf.rg) ~* $1
+            SELECT * FROM vw_cliente WHERE searchable ~* $1
             OFFSET $2 LIMIT 10
         `, [search, offset]);
 
         let countPlanoResult = await db.query(`
-            SELECT count(*) AS count FROM pessoa WHERE rel = 1
-            AND p.doc || lower(cf.nome) || lower(cf.rg) ~* $1
-        `);
+            SELECT count(*) AS count FROM vw_cliente
+            WHERE searchable ~* $1
+        `, [search]);
 
         let { count } = countPlanoResult[0];
         let numberOfPages = Math.ceil(count / 10);
@@ -80,7 +63,7 @@ module.exports = {
     },
 
     async create(cliente) {
-        let {doc, nome, rg, sexo, nasc, enderecos} = cliente;
+        let {doc, nome, rg, sexo = 0, nasc, enderecos} = cliente;
         try {
 
             db.prepare(`
@@ -116,9 +99,8 @@ module.exports = {
 
     async getSingle(doc) {
         let data = await db.query(`
-            SELECT p.doc, cf.nome, cf.nasc FROM pessoa p
-            JOIN carac_fisica cf ON (p.doc = cf.doc)
-            WHERE p.rel = 1 AND p.doc = $1
+            SELECT doc, nome, rg, sexo, muni, logra, uf FROM vw_cliente p
+            WHERE doc = $1
         `, [ doc ]);
 
         return data[0];

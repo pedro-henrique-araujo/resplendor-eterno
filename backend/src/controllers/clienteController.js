@@ -8,10 +8,9 @@ async function detailCliente(request, response) {
 }
 
 async function createCliente(request, response) {
-    
+
     let { body } = request;
     let result = await clienteRepository.create(body);
-    
     if (!result.success) {
         response.status(400).json(result);
         return;
@@ -25,7 +24,7 @@ function clienteController(routes) {
     let { paginationList, getOptions } = standardOperations;
     routes.get('/clientes', paginationList);
     routes.get('/clientes/options', getOptions);
-    routes.get('/clientes/:doc', detailCliente)
+    routes.get('/clientes/:doc', detailCliente);
     routes.post('/clientes', createCliente);
 }
 

@@ -69,7 +69,7 @@ export default function ClientesList() {
                             <td>{cliente.doc}</td>
                             <td>{cliente.nome}</td>
                             <td>{'{contato}'}</td>
-                            <td>{'{endereco}'}</td>
+                            <td>{cliente.logra}</td>
                             <td>
                                 <DefaultButton onClick={() => {}} icon={editIcon} />
                             </td>

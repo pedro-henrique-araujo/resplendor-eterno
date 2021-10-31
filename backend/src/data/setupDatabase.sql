@@ -186,13 +186,9 @@ CREATE OR REPLACE FUNCTION create_cliente
 ) 
 RETURNS VARCHAR(255) AS $$
 	BEGIN
-		INSERT INTO pessoa
-		VALUES
-		(p_doc, 1);
+		INSERT INTO pessoa VALUES (p_doc, 1);
 		
-		INSERT INTO carac_fisica
-		VALUES
-		(p_doc, p_nome, p_rg, p_sexo, p_nasc);
+		INSERT INTO carac_fisica VALUES (p_doc, p_nome, p_rg, p_sexo, p_nasc);
 		RETURN p_doc;
 	END;
 $$ LANGUAGE plpgsql;
@@ -274,16 +270,49 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE VIEW vw_contrato AS
 SELECT
-                c.id || cf.nome || p.descr as searchable,
-                c.id,
-                cf.nome as cliente,
-                p.descr as plano,
-                c.venc,
-                COUNT(cd.doc) as count_dependentes,
-                COUNT(ct.id) > 0 as is_processed
-            FROM contrato c
-            JOIN carac_fisica cf ON (c.clie_doc = cf.doc)
-            LEFT JOIN contrato_dep cd ON (cd.contrato_id = c.id)
-            LEFT JOIN contrato_titulo ct ON (ct.contrato_id = c.id)
-            JOIN plano p ON (p.id = c.plano_id)
-            GROUP BY c.id, cf.nome,	p.descr, c.venc;
+    c.id || cf.nome || p.descr as searchable,
+    c.id,
+    cf.nome as cliente,
+    p.descr as plano,
+    c.venc,
+    COUNT(cd.doc) as count_dependentes,
+    COUNT(ct.id) > 0 as is_processed
+FROM contrato c
+JOIN carac_fisica cf ON (c.clie_doc = cf.doc)
+LEFT JOIN contrato_dep cd ON (cd.contrato_id = c.id)
+LEFT JOIN contrato_titulo ct ON (ct.contrato_id = c.id)
+JOIN plano p ON (p.id = c.plano_id)
+GROUP BY c.id, cf.nome,	p.descr, c.venc;
+
+
+CREATE OR REPLACE FUNCTION get_endereco_pessoa(p_doc VARCHAR(14)) RETURNS endereco AS 
+$$
+    SELECT * FROM endereco WHERE doc = p_doc;
+$$ LANGUAGE SQL;
+
+
+CREATE OR REPLACE VIEW vw_cliente AS 
+SELECT
+    lower(p.doc || cf.nome || cf.rg || e.muni || e.logra) searchable,
+    p.doc,
+    cf.nome,
+    cf.rg,
+    cf.sexo,
+    cf.nasc,
+    e.muni,
+    e.logra,
+    e.uf
+FROM pessoa p, 
+    get_endereco_pessoa(p.doc) e, 
+    carac_fisica cf
+WHERE (p.doc = cf.doc)
+AND p.rel = 1;
+
+
+CREATE OR REPLACE FUNCTION get_titulos_contrato(p_contrato_id INTEGER) RETURNS SETOF titulo AS $$
+    SELECT
+        t.*
+    FROM titulo t
+    JOIN contrato_titulo ct ON (t.id = ct.titulo_id)
+    WHERE ct.contrato_id = p_contrato_id;
+$$ LANGUAGE SQL;

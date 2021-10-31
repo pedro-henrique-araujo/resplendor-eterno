@@ -1,4 +1,5 @@
 let standardMessages = require('../utils/standardMessages');
+let clienteRepository = require('./clienteRepository');
 let db = require('../data/db');
 
 module.exports = {
@@ -78,6 +79,13 @@ module.exports = {
         }
     },
 
+    async getSingle(id) {
+        let data = await db.query(`
+            SELECT * FROM contrato WHERE id = $1        
+        `, [id]);
+        return data[0];
+    },
+
     async process(id) {
         try {
             let sql = 'SELECT process_contrato($1)';
@@ -87,11 +95,20 @@ module.exports = {
                 success: true
             };
         } catch (error) {
-            console.log(error);
             return {
                 message: standardMessages.recordCouldntBeCreated,
                 success: false
             };
         }
+    },
+
+    async getInstallments(id) {
+        let output = {};
+        let { clieDoc } = await this.getSingle(id);
+        output.cliente = await clienteRepository.getSingle(clieDoc);
+        output.titulos = await db.query(`
+            SELECT * FROM get_titulos_contrato($1);
+        `, [id]);
+        return output;
     }
 }
