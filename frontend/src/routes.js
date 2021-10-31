@@ -38,7 +38,7 @@ export default function Routes() {
                     <Route path="/fornecedores/editar/:doc" component={FornecedoresEdit} />
                     <Route exact path="/clientes" component={ClientesList} />
                     <Route path="/clientes/novo" component={ClientesNew} />
-                    <Route path="/clientes/:doc" component={ClientesDetail} />
+                    <Route path="/clientes/detail/:doc" component={ClientesDetail} />
                     <Route path="/dependentes/novo/:doc" component={DependentesNew} />
                     <Route exact path="/saidas" component={SaidasList} />
                     <Route exact path="/entradas" component={EntradasList} />

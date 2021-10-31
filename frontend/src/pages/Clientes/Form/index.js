@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { MutedButton, PrimaryButton, DefaultButton } from '../../../components/Button';
 import { TextWithLabel, DateWithLabel, HorizontalInputDiv } from '../../../components/Input';
-import { useHistory } from 'react-router-dom';
-import api from '../../../services/api';
 import arrowLeftIcon from '../../../assets/arrow-left.svg';
 import plusItemGreen from '../../../assets/plus-item-green.svg';
 import saveIcon from '../../../assets/save.svg';

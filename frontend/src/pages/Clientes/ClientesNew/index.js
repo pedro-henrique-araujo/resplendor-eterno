@@ -21,5 +21,5 @@ export default function ClientesNew() {
                 <Form goBack={history.goBack} save={goNext} />
             </div>
         </div>
-    )
+    );
 }

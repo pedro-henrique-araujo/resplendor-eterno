@@ -41,8 +41,8 @@ export default function Layout(props) {
                     <MenuOption to="/contratos" src={fileIcon} text="Contratos"/>
                     <MenuOption to="/fornecedores" src={truckIcon} text="Fornecedores"/>
                     <MenuOption to="/clientes" src={userIcon} text="Clientes"/>
-                    <MenuOption to="/saidas" src={outIcon} text="Saidas"/>
-                    <MenuOption to="/entradas" src={inIcon} text="Entradas"/>
+                    {/* <MenuOption to="/saidas" src={outIcon} text="Saidas"/>
+                    <MenuOption to="/entradas" src={inIcon} text="Entradas"/> */}
                 </div>
             </div>
             <main>

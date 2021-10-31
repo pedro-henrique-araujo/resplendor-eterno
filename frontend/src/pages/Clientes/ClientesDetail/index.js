@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { DefaultButton, MutedButton } from '../../../components/Button';
 import './style.css';
 import { useHistory, useParams } from 'react-router';
-
+import moment from 'moment';
 
 import editIcon from '../../../assets/edit-blue.svg';
 import plusItemGreen from '../../../assets/plus-item-green.svg';
@@ -12,21 +12,19 @@ import arrowLeftIcon from '../../../assets/arrow-left.svg';
 
 function PersonSection(props) {
             
-    let { nome, doc, nasc, enderecos} = props.person;
-    console.log(props.person);
-    //let {rua, numResidencia } = enderecos[0];
+    let { nome, doc, nasc, logra} = props.person;
     return (
         <div className="person-section">
             <div className="header children-inline">
                 <b>{nome}</b>
                 <div>{doc}</div>
-                <DefaultButton onClick={() => {}} icon={editIcon} />
+                <DefaultButton onClick={props.onClick} icon={editIcon} />
             </div>
             <div className="address">
-                {'rua'}, {'numResidencia'}
+                {logra}, {'numResidencia'}
             </div>
             <div className="birthdate">
-                {nasc}
+                {moment(nasc).format('DD/MM/YYYY')}
             </div>
         </div>
     );
@@ -36,6 +34,11 @@ export default function ClientesDetail() {
 
     function goToListing() {
         history.push('/clientes');
+    }
+
+    function goToNewDependente()  {
+        let {doc} = params;
+        history.push('/dependentes/novo/' + doc);
     }
 
     let [person, setPerson] = useState({});
@@ -55,7 +58,7 @@ export default function ClientesDetail() {
     
     return (
         <div>
-            <h2>Novo Cliente</h2>
+            <h2>Editar Cliente</h2>
             <div className="main-view">
                 <div className="view-body">
                     <MutedButton icon={arrowLeftIcon} onClick={goToListing}/>
@@ -64,11 +67,11 @@ export default function ClientesDetail() {
                         <h3>
                             Dependentes
                         </h3>
-                        <DefaultButton icon={plusItemGreen} />
+                        <DefaultButton icon={plusItemGreen} onClick={goToNewDependente} />
                     </div>
 
                     {dependentes.map(dependente => (
-                        <PersonSection person={dependente} />
+                        <PersonSection key={dependente.doc} person={dependente} />
                     ))}
                 </div>
             </div>

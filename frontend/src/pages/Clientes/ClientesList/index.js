@@ -32,6 +32,10 @@ export default function ClientesList() {
         history.push('/clientes/novo');
     }
 
+    function goEdit(doc) {
+        history.push('/clientes/detail/' + doc);
+    }
+
     let [clientes, setClientes] = useState([]);
     let [page, setPage] = useState(1);
     let [numberOfPages, setNumberOfPages] = useState(0);
@@ -71,7 +75,7 @@ export default function ClientesList() {
                             <td>{'{contato}'}</td>
                             <td>{cliente.logra}</td>
                             <td>
-                                <DefaultButton onClick={() => {}} icon={editIcon} />
+                                <DefaultButton onClick={() => goEdit(cliente.doc)} icon={editIcon} />
                             </td>
                         </tr>
                     ))}

@@ -15,7 +15,7 @@ export default function ClientesNew() {
             parenId: 1
         };
         await api.post('/dependentes', objectToSend);
-        history.push('/clientes/' + doc);
+        history.push('/clientes/detail/' + doc);
     }
 
     let params = useParams();

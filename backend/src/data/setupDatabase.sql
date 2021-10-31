@@ -316,3 +316,23 @@ CREATE OR REPLACE FUNCTION get_titulos_contrato(p_contrato_id INTEGER) RETURNS S
     JOIN contrato_titulo ct ON (t.id = ct.titulo_id)
     WHERE ct.contrato_id = p_contrato_id;
 $$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION create_dependente
+(
+	p_doc VARCHAR(14),
+    p_doc_dep VARCHAR(14),
+    p_paren_id INTEGER,
+	p_nome VARCHAR(255),
+	p_rg VARCHAR(11),
+	p_sexo INTEGER,
+	p_nasc DATE
+) 
+RETURNS VARCHAR(255) AS $$
+	BEGIN
+		INSERT INTO pessoa VALUES (p_doc, 3);
+		
+		INSERT INTO carac_fisica VALUES (p_doc, p_nome, p_rg, p_sexo, p_nasc);
+        INSERT INTO relac_dep VALUES (p_doc, p_doc_dep, p_paren_id);
+		RETURN p_doc;
+	END;
+$$ LANGUAGE plpgsql;
