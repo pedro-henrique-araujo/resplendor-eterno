@@ -1,7 +1,7 @@
 let contratoRepository = require('../repository/contratoRepository');
 let generator = require('../installmentsGenerator');
 let createStandardOperations = require('./standardOperations');
-let environment = require('../environment');
+let {publicLocation} = require('../environment');
 
 async function createContrato(request, response) {
     let { body } = request;
@@ -27,7 +27,7 @@ async function generateInstallments(request, response) {
     let { id } = request.params;
     let installments = await contratoRepository.getInstallments(id);
     let filename = generator.run(installments);
-    response.json({ location: environment.server + '/' + filename });
+    response.json({ location: publicLocation + filename });
 }
 
 function contratoController(routes) {
