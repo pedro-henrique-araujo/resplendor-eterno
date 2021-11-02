@@ -21,7 +21,8 @@ function PersonSection(props) {
                 <DefaultButton onClick={props.onClick} icon={editIcon} />
             </div>
             <div className="address">
-                {logra}, {'numResidencia'}
+                {logra}
+                {/* {logra}, {'numResidencia'} */}
             </div>
             <div className="birthdate">
                 {moment(nasc).format('DD/MM/YYYY')}
@@ -31,11 +32,6 @@ function PersonSection(props) {
 }
 
 export default function ClientesDetail() {
-
-    function goToListing() {
-        history.push('/clientes');
-    }
-
     function goToNewDependente()  {
         let {doc} = params;
         history.push('/dependentes/novo/' + doc);
@@ -61,7 +57,7 @@ export default function ClientesDetail() {
             <h2>Editar Cliente</h2>
             <div className="main-view">
                 <div className="view-body">
-                    <MutedButton icon={arrowLeftIcon} onClick={goToListing}/>
+                    <MutedButton icon={arrowLeftIcon} onClick={history.goBack}/>
                     <PersonSection person={person} />
                     <div className="children-inline">
                         <h3>

@@ -69,7 +69,7 @@ export default function ClientesList() {
                     </thead>
                     <tbody>
                     {clientes?.map(cliente => (
-                        <tr>
+                        <tr key={cliente.doc}>
                             <td>{cliente.doc}</td>
                             <td>{cliente.nome}</td>
                             <td>{'{contato}'}</td>

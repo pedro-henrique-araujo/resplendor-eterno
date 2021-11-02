@@ -5,6 +5,7 @@ import api from '../../../services/api';
 import moment from 'moment';
 import plusIcon from '../../../assets/plus.svg';
 import doubleGearIcon from '../../../assets/double-gear.svg';
+import printIcon from '../../../assets/print.svg';
 import {SearchInput} from '../../../components/Input';
 import PaginationInput from '../../../components/PaginationInput';
 
@@ -19,6 +20,14 @@ export default function ContratosList() {
     async function processContrato(id) {
         await api.post('/contratos/process/' + id);
         await loadList(page);
+    }
+
+    async function generatePdf(id) {
+        let {data: { location }} = await api.get('/contratos/installments/' + id);
+        let linkElement = document.createElement('a');
+        linkElement.target = '_blank';
+        linkElement.href = location;
+        linkElement.click();        
     }
     
     function loadList(page) {
@@ -90,7 +99,9 @@ export default function ContratosList() {
                                         onClick={() => processContrato(id)} />
                                     
                                 ): (
-                                    <div></div>
+                                    <DefaultButton
+                                        icon={printIcon} 
+                                        onClick={() => generatePdf(id)} />
                                 )}
                             </td>
                         </tr>
