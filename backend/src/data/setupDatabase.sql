@@ -37,6 +37,8 @@ CREATE TABLE tipo_plano (
     descr VARCHAR(255)
 );
 
+INSERT INTO tipo_plano (descr) VALUES ('NORMAL');
+
 CREATE TABLE plano (
     id SERIAL PRIMARY KEY,
     descr VARCHAR(255),
@@ -61,6 +63,8 @@ CREATE TABLE paren (
     id SERIAL PRIMARY KEY,
     descr VARCHAR(255)
 );
+
+INSERT INTO paren (descr) VALUES ('NÃO INFORMADO');
 
 CREATE TABLE relac_dep (
     doc VARCHAR(14),
@@ -104,7 +108,9 @@ CREATE TABLE fm_pag (
     id SERIAL PRIMARY KEY,
     descr VARCHAR(255),
     tipo INTEGER
-);  
+);
+
+INSERT INTO fm_pag (descr, tipo) VALUES ('BOLETO', 1);
 
 CREATE TABLE titulo (
     id SERIAL PRIMARY KEY,

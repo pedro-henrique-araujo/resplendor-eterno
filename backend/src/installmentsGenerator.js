@@ -153,7 +153,7 @@ function generateDocDefinition(installmentsInfo) {
 
 
 function run(installmentsInfo) {
-    let filename = "file" + '.pdf';
+    let filename = Date.now() + '.pdf';
     let pdfMake = new PdfMake({
         Times: {
           normal: 'Times-Roman',

@@ -1,11 +1,12 @@
 let pg = require('pg');
+let {dbUser, dbLocation, dbName, dbPassword} = require('../environment');
 
 
 let dbCredentials = {
-    user: 'pedro',
-    host: 'localhost',
-    database: 'resplendor_eterno',
-    password: '12345'
+    user: dbUser,
+    host: dbLocation,
+    database: dbName,
+    password: dbPassword
 };
 
 
