@@ -32,7 +32,7 @@ function generateInstallment({
     },
     pageBreak
 }) {
-    let formattedVenc = venc.toLocaleDateString();
+    let formattedVenc = venc.toLocaleDateString('pt-BR');
     let generatedDate = new Date().toLocaleDateString();
     let referenceMonth = `${MONTHS[venc.getMonth()]} / ${venc.getFullYear()}`;
     return {
