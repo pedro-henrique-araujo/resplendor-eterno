@@ -36,7 +36,7 @@ function generateInstallment({
     let generatedDate = new Date().toLocaleDateString();
     let referenceMonth = `${MONTHS[venc.getMonth()]} / ${venc.getFullYear()}`;
     return {
-        layout: 'noBorders',
+        layout: 'dottedLine',
         pageBreak,
         table: {
             widths: ['auto', '*'],
@@ -174,7 +174,20 @@ function run(installmentsInfo) {
                 hLineColor(i) {                            
                     return ['white', 'black'][i];
                 },
-            },            
+            },    
+            
+            dottedLine: {
+                hLineWidth(i) {
+					return 0;
+				},
+
+				vLineStyle(i, node) {
+					if (i === 0 || i === node.table.widths.length) {
+						return null;
+					}
+					return {dash: {length: 4}};
+				}
+            }
         }
     });
     let stream = FileSystem.createWriteStream(outputDirectory + '/' + filename);
