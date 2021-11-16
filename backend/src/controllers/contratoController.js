@@ -18,7 +18,6 @@ async function createContrato(request, response) {
 
 async function processContrato(request, response) {
     let { id } = request.params;
-
     let result = await contratoRepository.process(id);
     response.status(201).json(result);
 }

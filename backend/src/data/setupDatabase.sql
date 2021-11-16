@@ -203,7 +203,7 @@ CREATE TABLE contrato_titulo (
     id SERIAL PRIMARY KEY,
     contrato_id INTEGER,
     titulo_id INTEGER,
-    codbar INTEGER
+    codbar VARCHAR(50)
 );
 
 ALTER TABLE contrato_titulo ADD FOREIGN KEY (contrato_id) REFERENCES contrato(id);
@@ -215,7 +215,8 @@ CREATE OR REPLACE FUNCTION create_contrato_titulo(
     p_venc timestamp without time zone, 
     p_val DECIMAL(18, 2), 
     p_fm_pag_id INTEGER, 
-    p_contrato_id INTEGER
+    p_contrato_id INTEGER,
+    p_codbar_sufixo INTEGER
 ) RETURNS INTEGER AS $$ 
 DECLARE
 	v_next_titulo_id INTEGER;
@@ -223,7 +224,7 @@ BEGIN
 	SELECT nextval('titulo_id_seq') INTO v_next_titulo_id;
 	INSERT INTO titulo VALUES(v_next_titulo_id,	p_venc, p_val, 0, 1);
 
-	INSERT INTO contrato_titulo(contrato_id, titulo_id, codbar)	VALUES(p_contrato_id, v_next_titulo_id, 0);
+	INSERT INTO contrato_titulo(contrato_id, titulo_id, codbar)	VALUES(p_contrato_id, v_next_titulo_id, p_contrato_id::varchar || p_codbar_sufixo::varchar);
     RETURN v_next_titulo_id;
 END;
 $$ LANGUAGE plpgsql;
@@ -242,7 +243,8 @@ BEGIN
 			CURRENT_DATE + INTERVAL '1 MONTH' * i,
 			p_plano.preco / v_number_of_installments,
 			1,
-			p_contrato.id
+			p_contrato.id,
+            i
 		);
 	END LOOP;
 	
@@ -255,8 +257,6 @@ RETURNS INTEGER AS $$
 DECLARE
 	v_contrato contrato;
 	v_plano plano;
-	
-	v_next_titulo_id INTEGER;
 BEGIN
 	SELECT * INTO v_contrato 
 	FROM contrato 
