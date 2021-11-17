@@ -1,7 +1,8 @@
 let FileSystem = require('fs');
 let PdfMake = require('pdfmake');
+let { createCanvas } = require('canvas');
+let JsBarcode = require('jsbarcode');
 let outputDirectory = 'public';
-
 
 function generateValue(label, value) {
     return [
@@ -28,13 +29,21 @@ function generateInstallment({
     titulo: {
         id,
         venc,
-        val
+        val,
+        codbar
     },
     pageBreak
 }) {
     let formattedVenc = venc.toLocaleDateString('pt-BR');
     let generatedDate = new Date().toLocaleDateString();
     let referenceMonth = `${MONTHS[venc.getMonth()]} / ${venc.getFullYear()}`;
+    let barcodeCanvas = createCanvas(50, 50);
+    JsBarcode(barcodeCanvas, codbar, {
+        fontSize: 11,
+        height: 30,
+        width: 1,
+        displayValue: false
+    });
     return {
         layout: 'dottedLine',
         pageBreak,
@@ -53,7 +62,8 @@ function generateInstallment({
                                     [generateValue("Bairro", "Chácara da Prainha")],
                                     [generateValue("Cidade", muni)],
                                     [generateValue("Valor do documento", "R$ " + val)],
-                                    [generateValue("Mês de referência", referenceMonth)]
+                                    [generateValue("Mês de referência", referenceMonth)],
+                                    
                                 ]
                             }
                         }
@@ -121,11 +131,16 @@ function generateInstallment({
                                 body: [
                                     [
                                         generateValue("Bairro e cidade", `Chácara de Prainha ${muni} - CE`),
-                                    ],
+                                    ]
                                 ]
                             }
                         },
-                        '\n\n\n'
+
+                        {
+                            image: barcodeCanvas.toDataURL(),
+                            alignment: 'center',
+                            weight: 100
+                        }
                     ]
                 ]
             ]
