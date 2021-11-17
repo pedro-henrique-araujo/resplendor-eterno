@@ -315,9 +315,20 @@ WHERE (p.doc = cf.doc)
 AND p.rel = 1;
 
 
+create type tp_titulos_contratos AS
+(
+	id INTEGER,
+	venc DATE,
+	val NUMERIC(18,2),
+	status INTEGER,
+	fm_pag_id INTEGER,
+	codbar VARCHAR(50)
+);
+
 CREATE OR REPLACE FUNCTION get_titulos_contrato(p_contrato_id INTEGER) RETURNS SETOF titulo AS $$
     SELECT
-        t.*
+        t.*,
+        ct.codbar
     FROM titulo t
     JOIN contrato_titulo ct ON (t.id = ct.titulo_id)
     WHERE ct.contrato_id = p_contrato_id;
