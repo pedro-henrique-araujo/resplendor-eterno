@@ -21,6 +21,13 @@ export default function ClientesNew() {
     let params = useParams();
     let history = useHistory();
 
+
+    /**
+     * TODO
+     * Criar funcionalidade para usuário escolher grau de parentesco do dependente
+     * Adicionar select para com as opções de parentesco
+     * Enviar id do parentesco na requisição post
+     */
     return (
         <div>
             <h2>Novo Dependente</h2>
