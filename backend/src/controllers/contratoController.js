@@ -2,6 +2,7 @@ let contratoRepository = require('../repository/contratoRepository');
 let generator = require('../installmentsGenerator');
 let createStandardOperations = require('./standardOperations');
 let {publicLocation} = require('../environment');
+const contratoPaperGenerator = require('../contratoPaperGenerator');
 
 async function createContrato(request, response) {
     let { body } = request;
@@ -14,6 +15,12 @@ async function createContrato(request, response) {
 
     response.status(201).json(result);
 
+}
+
+async function contratoPaper(request, response) {
+    let filename = contratoPaperGenerator();   
+
+    response.json({ location: publicLocation + 'contratos/' + filename });
 }
 
 async function processContrato(request, response) {
@@ -34,6 +41,7 @@ function contratoController(routes) {
     let { paginationList } = standardOperations;
     routes.get('/contratos', paginationList);
     routes.get('/contratos/installments/:id', generateInstallments);
+    routes.get('/contratos/paper/:id', contratoPaper);
     routes.post('/contratos', createContrato);
     routes.post('/contratos/process/:id', processContrato);
 }

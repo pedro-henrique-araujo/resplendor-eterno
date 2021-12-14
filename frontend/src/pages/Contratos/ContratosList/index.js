@@ -6,6 +6,7 @@ import moment from 'moment';
 import plusIcon from '../../../assets/plus.svg';
 import doubleGearIcon from '../../../assets/double-gear.svg';
 import printIcon from '../../../assets/print.svg';
+import contratoPaperIcon from '../../../assets/contrato-paper.svg'
 import {SearchInput} from '../../../components/Input';
 import PaginationInput from '../../../components/PaginationInput';
 
@@ -28,6 +29,14 @@ export default function ContratosList() {
         linkElement.target = '_blank';
         linkElement.href = location;
         linkElement.click();        
+    }
+
+    async function getContratoPaper(id) {
+        let {data: { location }} = await api.get('/contratos/paper/' + id);
+        let linkElement = document.createElement('a');
+        linkElement.target = '_blank';
+        linkElement.href = location;
+        linkElement.click();      
     }
     
     function loadList(page) {
@@ -93,15 +102,23 @@ export default function ContratosList() {
                             <td>{countDependentes}</td>
                             <td>{moment(venc).format('DD/MM/YYYY')}</td>
                             <td>
-                                {!isProcessed  ? (
+                                
+                                {isProcessed  ? (         
+                                    <>
+                                        <DefaultButton
+                                            icon={contratoPaperIcon} 
+                                            onClick={() => getContratoPaper(id)} />  
+                                        <DefaultButton
+                                            icon={printIcon} 
+                                            onClick={() => generatePdf(id)} />    
+                                    </>                          
+                                     
+                                    
+                                ): (
+                                    
                                     <DefaultButton
                                         icon={doubleGearIcon} 
                                         onClick={() => processContrato(id)} />
-                                    
-                                ): (
-                                    <DefaultButton
-                                        icon={printIcon} 
-                                        onClick={() => generatePdf(id)} />
                                 )}
                             </td>
                         </tr>
