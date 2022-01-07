@@ -1,4 +1,5 @@
 let contratoRepository = require('../repository/contratoRepository');
+let clienteRepository = require('../repository/clienteRepository');
 let generator = require('../installmentsGenerator');
 let createStandardOperations = require('./standardOperations');
 let {publicLocation} = require('../environment');
@@ -18,7 +19,9 @@ async function createContrato(request, response) {
 }
 
 async function contratoPaper(request, response) {
-    let filename = contratoPaperGenerator();   
+    let {id} = request.params;  
+    let cliente = await clienteRepository.getClienteByContratoId(id);
+    let filename = contratoPaperGenerator(cliente);   
 
     response.json({ location: publicLocation + 'contratos/' + filename });
 }

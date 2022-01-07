@@ -355,6 +355,17 @@ RETURNS VARCHAR(255) AS $$
 $$ LANGUAGE plpgsql;
 
 
+CREATE FUNCTION get_cliente_by_contrato_id(p_contrato_id INTEGER) 
+RETURNS vw_cliente
+AS $$
+
+SELECT cli.* FROM contrato co
+JOIN vw_cliente cli ON (cli.doc = co.clie_doc)
+WHERE id = p_contrato_id;
+
+$$ LANGUAGE SQL;
+
+
 
 -- IF EXECUTING AS ADMIN
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO pedro;
