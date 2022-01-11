@@ -110,7 +110,6 @@ module.exports = {
         let data = await db.query(`
             SELECT * FROM get_cliente_by_contrato_id($1);
         `, [id]);
-
         return data[0];
     }
 }
